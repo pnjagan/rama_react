@@ -1,0 +1,52 @@
+use create-create-app for the setup.
+
+
+yarn add typeface-roboto 
+yarn add  @material-ui/core
+
+
+yarn add @material-ui/icons
+
+======================================
+should use older version of "@date-io/date-fns": "1.3.6",
+
+Install using :
+yarn add @date-io/date-fns@1.3.6 --exact
+====================================================
+UI Ideas discussed with Meenakshi:
+-----------------------------------------
+Textfield
+Dropdown
+Checkbox
+Button
+Labels
+DATE Input
+---------------------------------------------------
+LOV-search : Is mandatory, find out a way to refer a record-group from the backend
+Slide and Switch are getting popular as they are easier to handle in mobile and touch screen
+Transfer is still rarely used.
+----------------------------------------------------
+Heading
+TextArea
+Instructions
+MultiSelect - [Chip is not a good idea - but moving selected fields to the TOP is a good idea.]
+              Showing selected items as a LIST below is also a good idea.
+-----------------------------
+Layouts:
+----------
+row
+single column
+double column
+Tabs
+DIalogs
+Menu
+
+--------------------------------------------------------------
+use media query in JavaScript.
+Build 2 layouts:
+Desktop and mobile
+At the most , 3 - Desktop, mobile and TAB
+-----------------------------
+Handling Tables - Refresh and pagination are mandatory
+Table selections are key
+Edit , download and more details are nowadays implemented as a hover links, rather than as action buttons

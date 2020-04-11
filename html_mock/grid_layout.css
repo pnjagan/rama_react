@@ -1,0 +1,68 @@
+body {
+    background-color: lightblue;
+  }
+
+div {
+    border-style: solid;
+    border-color: brown;
+    border-width: 1px;
+}
+
+.gc {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;    
+    grid-template-areas : "gi-1 gi-2" "gi-3 gi-4";
+    grid-column-gap : 5px;
+    grid-row-gap : 5px; 
+    align-items: center;
+}
+
+.w-l {
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+    width : 100%;
+    height : 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.w-r {
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+    width : 100%;
+    height : 100%;
+    display: flex;
+    align-items: center;    
+    justify-content: flex-start;    
+}
+/****************Define shapes of items*************************/
+.gi-1 {
+    height : 100px;
+    width : 75px;
+   /* justify-self: right; */
+}
+
+
+.gi-2 {
+    height : 20px;
+    width : 50px;
+  /*  justify-self: left; */
+}
+
+.gi-3 {
+    height : 75px;
+    width : 100px;
+  /*   justify-self: right; */
+}
+
+.gi-4 {
+    height : 125px;
+    width : 150px;
+  /*   justify-self: left; */
+}
+
+/****************end define item shapes************************/
