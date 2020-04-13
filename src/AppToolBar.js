@@ -36,6 +36,7 @@ import Grid from '@material-ui/core/Grid';
 import AppBarMenuList from './AppBarMenuList';
 
 import HamburgerMenu from './HamburgerMenu';
+import AppsIcon from '@material-ui/icons/Apps';
 
 
 
@@ -47,11 +48,8 @@ const useStyles = makeStyles(theme => ({
   }
 ));
 
-
-
 export default function ButtonAppBar() {
   const classes = useStyles();
-
   const theme = useTheme();
 
    const mdDown = useMediaQuery(theme.breakpoints.down('md'));
@@ -63,9 +61,8 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar style={{display: 'flex'}}>
 
-          <Typography variant="h6" className={classes.title}>
-              SApps
-          </Typography>  
+        <a onClick={e=>console.log('ALert')}><AppsIcon/></a>
+              
 
           <Hidden mdUp>
             <HamburgerMenu />
@@ -76,16 +73,12 @@ export default function ButtonAppBar() {
             ,{itemName : "Customers"    , itemHandler: null}
             ,{itemName : "Config" , itemHandler: null}                
             ] }/>
-
-
-
-
         */}
           </Hidden>
 
         <Hidden smDown>
 
-          <AppBarMenuList menuName="Invoice" menuItems={ [ 
+          <AppBarMenuList link menuName="Invoice" menuItems={ [ 
               {itemName : "New"     , itemHandler: null}
               ,{itemName : "Search" , itemHandler: null}  
             ] }/>
@@ -119,7 +112,7 @@ export default function ButtonAppBar() {
              ,{itemName : "Contact us", itemHandler: null}  
              ] }/>
 
-          <AppBarMenuList menuName="JA" outline="no" menuItems={ [
+          <AppBarMenuList menuName="LoggedInUser" outline="no" menuItems={ [
              {itemName : "Logout", itemHandler: null}
              ] }/>
 

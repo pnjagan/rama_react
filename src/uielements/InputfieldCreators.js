@@ -19,7 +19,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 
 
-import { Button} from '@material-ui/core';
+import { Button,Link} from '@material-ui/core';
 
 import seqVal from './SequenceGen';
 
@@ -49,9 +49,13 @@ function BuildRRTextField(props) {
         fieldProps.id = 'RRTF-' + seqVal();
     }
     fieldProps.placeholder = props.placeholder;    
+    if(props.type){
+        fieldProps.type="password";
+    }
+    
     
 
-    tfLabel = <InputLabel > {props.label} </InputLabel>;
+    tfLabel = <InputLabel >{props.label}</InputLabel>;
 
     textField =     <TextField 
     variant="outlined" 
@@ -114,6 +118,7 @@ function BuildRRDateField(props) {
 //size = small or mediem
 //label
 //inputLen = length of text field in chars
+//lov - values to show
 function BuildRRSelectField(props) {
 
     let fieldProps = {};
@@ -208,7 +213,16 @@ function BC(props) {
     return <div>{props.theme.direction}</div>;
 
 }
+//props.text
+function BuildLink(props) {
+
+    //className={} to be added to LINK
+    const preventDefault = event => event.preventDefault();    
+    return                 <Link  href="#" onClick={preventDefault} >
+    {props.text}
+  </Link>  
+}
   
 let  TBC = withTheme(BC);
 
-export {BuildRRTextField,BuildRRDateField,BuildRRSelectField,BuildRRCheckbox,BuildButton,TBC};
+export {BuildRRTextField,BuildRRDateField,BuildRRSelectField,BuildRRCheckbox,BuildButton,BuildLink,TBC};

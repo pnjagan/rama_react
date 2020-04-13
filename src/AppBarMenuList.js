@@ -32,14 +32,16 @@ import MenuIcon from '@material-ui/icons/Menu';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
+import PersonIcon from '@material-ui/icons/Person';
 
 
 
 const useStyles = makeStyles(theme => ({
-    button : {
+    labelMenu : {
       textTransform: 'none',
-      margin: '10px'
+      margin: '1rem',
+      fontSize : '1.2rem'
+
     }    
   }
 ));  
@@ -83,7 +85,7 @@ export default function AppBarMenuList(props) {
 
       <div>
 
-          <Button
+      {/* <Button
             ref={anchorRef}
             aria-controls={open ? 'menu-list-grow' : undefined}
             aria-haspopup="true"
@@ -92,12 +94,46 @@ export default function AppBarMenuList(props) {
             variant= { props.outline === "no"? "text":"outlined" }
             className={classes.button}
           >
+            <Typography variant="h6" >
+              {props.menuName}
+            </Typography>
+          </Button> 
+      */}
 
-          <Typography variant="h6" >
-            {props.menuName}
-          </Typography>
 
-          </Button>
+{
+(!props.link) ? (<Link 
+  ref={anchorRef}
+  onClick={handleToggle}
+  aria-haspopup="true"
+  aria-controls={open ? 'menu-list-grow' : undefined}
+  color="inherit"
+  className={classes.labelMenu}
+>
+    {/* <Typography variant="h6" > */}
+    
+      {
+      (
+        mn => {
+          if(mn !== 'LoggedInUser') {
+            return mn;
+          } else {
+            return <PersonIcon />;
+          }
+      }
+     )(props.menuName)
+    }
+
+</Link>) : (
+    <Link 
+      color="inherit"
+      className={classes.labelMenu}
+    >
+    {props.menuName }
+  </Link>
+) 
+}
+          
 
 
 

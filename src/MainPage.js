@@ -39,7 +39,7 @@ import ContentIndex from './ContentIndex'
 
 
 
-import ButtonAppBar from './ButtonAppBar';
+import AppToolBar from './AppToolBar';
 import Invoice from './Invoice';
 
 import { useHistory } from "react-router-dom";
@@ -85,8 +85,10 @@ function MainPage(props) {
     <React.Fragment>
       <CssBaseline />
 
-      <ButtonAppBar />
-      {mapToContent(history.location.pathname)}
+      <AppToolBar />
+
+      
+      {/* {mapToContent(history.location.pathname)} */}
     
     </React.Fragment>
   );

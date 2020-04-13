@@ -9,6 +9,52 @@ import MenuItem from "@material-ui/core/MenuItem";
 import OTSubMenuItem from "./OTSubMenuItem";
 
 
+/*
+  {
+    key: "1",
+    caption: "Invoice",
+    onClick: () => {},
+    subMenuItems: [
+      {
+        key: "100",
+        caption: "New Invoice",
+        onClick: () => {}
+      },
+      {
+        key: "101",
+        caption: "Search Invoices",
+        onClick: () => {}
+      }
+    ]     
+  },
+  {
+    key: "2",
+    caption: "Items",
+    onClick: () => {},
+    subMenuItems: [
+      {
+        key: "100",
+        caption: "New items",
+        onClick: () => {}
+      },
+      {
+        key: "101",
+        caption: "Search items",
+        onClick: () => {}
+      },
+      {
+        key: "102",
+        caption: "Item pricing",
+        onClick: () => {}
+      },
+      {
+        key: "103",
+        caption: "Item categories",
+        onClick: () => {}
+      }
+    ]     
+  },
+*/
 
 export default class OTMenu extends React.Component {
 
@@ -23,13 +69,12 @@ export default class OTMenu extends React.Component {
             menuItems={menuItem.subMenuItems}
           />
         );
+      } else {
+        return <MenuItem key={menuItem.key} onClick={menuItem.onClick}>
+          {menuItem.caption}
+        </MenuItem>;
       }
 
-      return (
-        <MenuItem key={menuItem.key} onClick={menuItem.onClick}>
-          {menuItem.caption}
-        </MenuItem>
-      );
     });
   };
 
@@ -46,7 +91,7 @@ export default class OTMenu extends React.Component {
       <MuiMenu  anchorOrigin={
                     {
                       horizontal: 'right'
-                      ,vertical: 'top' 
+                       ,vertical: 'top' 
                     }        
                 } 
                 anchorEl={anchorElement} 

@@ -11,63 +11,17 @@ const menuItems = [
   {
     key: "1",
     caption: "Invoice",
-    onClick: () => {},
-    subMenuItems: [
-      {
-        key: "100",
-        caption: "New Invoice",
-        onClick: () => {}
-      },
-      {
-        key: "101",
-        caption: "Search Invoices",
-        onClick: () => {}
-      }
-    ]     
+    onClick: () => {}
   },
   {
     key: "2",
     caption: "Items",
-    onClick: () => {},
-    subMenuItems: [
-      {
-        key: "100",
-        caption: "New items",
-        onClick: () => {}
-      },
-      {
-        key: "101",
-        caption: "Search items",
-        onClick: () => {}
-      },
-      {
-        key: "102",
-        caption: "Item pricing",
-        onClick: () => {}
-      },
-      {
-        key: "103",
-        caption: "Item categories",
-        onClick: () => {}
-      }
-    ]     
+    onClick: () => {}
   },
   {
     key: "3",
     caption: "Customers",
-    onClick: () => {},
-    subMenuItems: [
-      {
-        key: "100",
-        caption: "New customers",
-        onClick: () => {}
-      },
-      {
-        key: "101",
-        caption: "Search customers",
-        onClick: () => {}
-      }
-    ]   
+    onClick: () => {}
   },
   {
     key: "4",

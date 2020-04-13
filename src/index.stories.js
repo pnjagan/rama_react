@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from '@storybook/react/demo';
 import {BuildRRTextField,BuildRRDateField,BuildRRSelectField,BuildRRCheckbox,BuildButton,TBC} from './uielements/InputfieldCreators';
-import FormBuilder from './uielements/FormBuilder';
+
 import Box from '@material-ui/core/Box';
+import { createMuiTheme ,ThemeProvider} from '@material-ui/core/styles';
 
-
-
+import {SingleColumnForm,DoubleColumnForm}  from './uielements/FormBuilder';
 
 
 
@@ -14,7 +14,7 @@ export default { title: 'Button' };
 export const withText = () => <Button>Hello Button</Button>;
 
 
-import { createMuiTheme ,ThemeProvider} from '@material-ui/core/styles';
+
 
 
 
@@ -99,7 +99,8 @@ export const FormBuilderDemo = () => {
   });  
   //let row3 = [<button>Submit</button> , <button>Cancel</button>];
 
-  return FormBuilder([
+
+let FB = SingleColumnForm([
       row1
       ,row2
       ,row3
@@ -110,8 +111,13 @@ export const FormBuilderDemo = () => {
       , [
         BuildButton( {caption: 'Submit'}),BuildButton({caption:'Cancel'})
       ]
+      , [<div>A</div>]
     ]);
 
+return FB;
+
+// return new SingleColumnForm([[FB,FB]]);
+// return new SingleColumnForm( [new Button('Hare'),new Button('Krishna')] );
   
 }
 
@@ -140,3 +146,37 @@ let theme = createMuiTheme({
 export const themeDemo = () => <ThemeProvider theme={theme}>
 <FormBuilderDemo />
 </ThemeProvider>;
+
+
+export const DoubleColumnDemo = () => {
+  let row1 = BuildRRTextField ({
+    size : 'small',
+    label : 'name',
+    placeholder : 'ram ram',
+    inputLen : '10em'
+  });
+
+  let row2 = BuildRRTextField ({
+    size : 'small',
+    label : 'pob',
+    placeholder : 'bharatha',
+    inputLen : '20em'    
+  });  
+
+  let row3 = BuildRRTextField ({
+    size : 'small',
+    label : 'CApital',
+    placeholder : 'Ayodhya',
+    inputLen : '15em'
+  });  
+
+  let row4 = BuildRRDateField ({
+    size : 'small',
+    label : 'Invoice Date',
+    inputLen : '10em'
+  });    
+
+  let DC = DoubleColumnForm([[...row1,...row2],[...row3,...row4]]);  
+
+  return DC;
+}
