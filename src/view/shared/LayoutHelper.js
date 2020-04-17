@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-
+import Grid from '@material-ui/core/Grid';
 
 
 const useStyles = makeStyles({
@@ -61,7 +61,7 @@ const useStyles = makeStyles({
 
 //components is a 2D array
 //Array of Array[2] is the input
-function SingleColumnForm (components) {
+function SingleColumnOfFieldLabel (components) {
     let rowElement = null;
     let formStruc = [];
     let i = 0;
@@ -69,11 +69,11 @@ function SingleColumnForm (components) {
     let classes = useStyles();    
 
     for (rowElement of components ) {
-        if(rowElement.length==2) {
+        if(rowElement.length===2) {
             formStruc.push(<div key={i+1} className = {classes.wrl}> {rowElement[0]}</div>);
             formStruc.push(<div key={i+2} className = {classes.wrr}> {rowElement[1]}</div>);
             i = i + 2;
-        }else if ((rowElement.length==1)){
+        }else if ((rowElement.length===1)){
             formStruc.push(<div key={i+1} className = {classes.wrc2}> {rowElement[0]}</div>);
             i = i + 1;
         }
@@ -89,7 +89,7 @@ function SingleColumnForm (components) {
 
 //components is a 2D array
 //Array of Array[2] of Array[2] is the input
-function DoubleColumnForm (components) {
+function DoubleColumnOfFieldLabel (components) {
     let rowElement = null;
     let formStruc = [];
     let i = 0;
@@ -97,13 +97,13 @@ function DoubleColumnForm (components) {
     let classes = useStyles();    
 
     for (rowElement of components ) {
-        if(rowElement.length==4) {
+        if(rowElement.length===4) {
             formStruc.push(<div key={i+1} className = {classes.wrl}> {rowElement[0]}</div>);
             formStruc.push(<div key={i+2} className = {classes.wrr}> {rowElement[1]}</div>);
-            formStruc.push(<div key={i+1} className = {classes.wrl}> {rowElement[2]}</div>);
-            formStruc.push(<div key={i+2} className = {classes.wrr}> {rowElement[3]}</div>);            
+            formStruc.push(<div key={i+3} className = {classes.wrl}> {rowElement[2]}</div>);
+            formStruc.push(<div key={i+4} className = {classes.wrr}> {rowElement[3]}</div>);            
             i = i + 4;
-        }else if ((rowElement.length==1)){
+        }else if ((rowElement.length===1)){
             //to handle stretch
             formStruc.push(<div key={i+1} className = {classes.wrl}> {rowElement[0]}</div>);
             i = i + 1;
@@ -116,7 +116,31 @@ function DoubleColumnForm (components) {
     return tot;
 }
 
+//Single Column of mobile first elements
+function SingleColumnOfMFF(components){
+    let formStruct = <Grid container direction='column' spacing={2} alignItems='center'>
+        {components.map((c,i)=>{
+        return <Grid item key={'grid-'+i}> {c}</Grid>
+        })
+         }
+    </Grid>
+
+    return formStruct;
+}
+
+
+//Single ROw of mobile first elements
+function SingleRowOfMFF(components){
+    let formStruct = <Grid container direction='row' spacing={2} alignItems='center' justifyContent='space-around'>
+        {components.map((c,i)=>{
+        return <Grid item key={'grid-'+i}> {c}</Grid>
+        })
+         }
+    </Grid>
+
+    return formStruct;
+}
 
 // export default {SingleColumnForm,DoubleColumnForm}
 
-export  {SingleColumnForm,DoubleColumnForm};
+export  {SingleColumnOfFieldLabel,DoubleColumnOfFieldLabel,SingleColumnOfMFF,SingleRowOfMFF};

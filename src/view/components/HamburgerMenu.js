@@ -3,8 +3,8 @@ import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from '@material-ui/icons/Menu';
 
-import OTMenu from "./OTMenu";
-import OTSubMenuItem from "./OTSubMenuItem";
+import OTMenu from "../shared/OTMenu";
+import OTSubMenuItem from "../shared/OTSubMenuItem";
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const menuItems = [

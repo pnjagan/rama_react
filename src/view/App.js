@@ -3,10 +3,10 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {CssBaseline,Typography,Container,Paper,TextField,Button,Box} from '@material-ui/core';
-import LoginPage from './LoginPage'
-import MainPage from './MainPage'
-import WIP from './WIP'
-import {PathFunctionMap as CU} from './ConstantsUtils';
+import LoginPage from './pages/LoginPage'
+import MainPage from './pages/MainPage'
+import WIP from './pages/WIP'
+import {PathFunctionMap as CU} from './shared/ConstantsUtils';
 import { Route, Switch} from 'react-router-dom'     
 
 // SA uses following convention

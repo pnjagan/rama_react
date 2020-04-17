@@ -34,7 +34,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import {PathFunctionMap as CU} from './ConstantsUtils';
+import {PathFunctionMap as CU} from '../shared/ConstantsUtils';
 
 
 const useStyles = makeStyles(theme => ({

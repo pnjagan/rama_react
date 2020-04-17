@@ -1,21 +1,19 @@
 import React from 'react';
 import { Button } from '@storybook/react/demo';
-import {BuildRRTextField,BuildRRDateField,BuildRRSelectField,BuildRRCheckbox,BuildButton,TBC} from './uielements/InputfieldCreators';
+import {BuildRRTextField,BuildRRDateField,BuildRRSelectField,BuildRRCheckbox,BuildButton,TBC} from '../shared/LegacyInputfieldCreators';
 
 import Box from '@material-ui/core/Box';
 import { createMuiTheme ,ThemeProvider} from '@material-ui/core/styles';
 
-import {SingleColumnForm,DoubleColumnForm}  from './uielements/FormBuilder';
+import {SingleColumnOfFieldLabel,DoubleColumnOfFieldLabel}  from '../shared/LayoutHelper';
 
 
 
-export default { title: 'Button' };
+export default { title: 'INDEX' };
 
 export const withText = () => <Button>Hello Button</Button>;
 
-
-
-
+export const withTextDemo = () => <Button>Hello Button Demo</Button>;
 
 
 export const withEmoji = () => (
@@ -51,7 +49,7 @@ return (
 } ;
 */
 
-export const FormBuilderDemo = () => {
+export const SingleRowOfFL = () => {
   let row1 = BuildRRTextField ({
     size : 'small',
     label : 'name',
@@ -100,7 +98,7 @@ export const FormBuilderDemo = () => {
   //let row3 = [<button>Submit</button> , <button>Cancel</button>];
 
 
-let FB = SingleColumnForm([
+let FB = SingleColumnOfFieldLabel([
       row1
       ,row2
       ,row3
@@ -143,12 +141,12 @@ let theme = createMuiTheme({
   }
 });
 
-export const themeDemo = () => <ThemeProvider theme={theme}>
-<FormBuilderDemo />
-</ThemeProvider>;
+// export const themeDemo = () => <ThemeProvider theme={theme}>
+// <FormBuilderDemo />
+// </ThemeProvider>;
 
 
-export const DoubleColumnDemo = () => {
+export const DoubleRowOfFL = () => {
   let row1 = BuildRRTextField ({
     size : 'small',
     label : 'name',
@@ -176,7 +174,7 @@ export const DoubleColumnDemo = () => {
     inputLen : '10em'
   });    
 
-  let DC = DoubleColumnForm([[...row1,...row2],[...row3,...row4]]);  
+  let DC = DoubleColumnOfFieldLabel([[...row1,...row2],[...row3,...row4]]);  
 
   return DC;
 }
