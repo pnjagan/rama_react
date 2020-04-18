@@ -8,6 +8,7 @@ import {RRTextField,RRDateField,RRSelectField,RRCheckbox,RRButton,RRLink} from '
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { useDispatch } from 'react-redux'
 
 let log = console.log;
 
@@ -16,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     width: '100vw',
     height: '100vh',
     display: 'flex',
-    justifyContent: 'center',    
+    justifyContent: 'center',  
     alignItems: 'flex-start',  
   },
   loginPaper: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   loginForm: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',    
+    justifyContent: 'center', 
     alignItems: 'center', 
     padding: '.7vh'
   },         
@@ -59,6 +60,8 @@ const tabStyle = makeStyles(theme=>{return {
 
 
 function LoginPage() {
+
+  let dispatch = useDispatch();
 
   const TabPanel = (props) => {
     return (props.index === props.value)? <div> {props.children}</div>:null;
@@ -98,8 +101,14 @@ SriRam Invoice
   
 
   let loginButton = RRButton({
-    caption : 'Login'
-  })
+    caption : 'Login',
+    onClick : 
+      () => {
+        dispatch({});
+      }
+    
+  });
+
   let forgotLink =RRLink({text: 'Forgot password'});
 
   let newUserLink = RRLink({text:'New user'});

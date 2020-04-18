@@ -7,12 +7,54 @@ import 'typeface-roboto';
 
 import {BrowserRouter as Router } from 'react-router-dom'    
 
-//being the entry point, importing roboto
+
+
+
+
+import { createStore, applyMiddleware, compose } from "redux";
+import createSagaMiddleware from "redux-saga";
+import { Provider } from "react-redux";
+
+import  rootReducer  from "./state/reducers";
+import  rootSaga  from "./state/sagas";
+
+let log = console.log;
 
 //import * as serviceWorker from './serviceWorker';
 
+
+
+
+
+//being the entry point, importing roboto
+
+
+
 function WrappedApp(props) {
-	return ( <Router> <App /> </Router>);
+
+// create the saga middleware
+const sagaMiddleware = createSagaMiddleware();
+
+// dev tools middleware
+// const reduxDevTools =  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
+log('Root reducer');
+log(rootReducer,sagaMiddleware);
+// create a redux store with our reducer above and middleware
+let store = createStore(
+	rootReducer
+	,applyMiddleware(sagaMiddleware)
+);
+
+// run the saga
+sagaMiddleware.run(rootSaga);
+	
+	return ( <Provider store={store}>
+				<Router> 
+					<App /> 
+				</Router>  
+			</Provider>
+	);
 }
 
 ReactDOM.render( <WrappedApp /> , document.getElementById('root'));

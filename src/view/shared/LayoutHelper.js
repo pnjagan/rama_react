@@ -42,7 +42,7 @@ const useStyles = makeStyles({
         height : '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-start', 
     },
     wrc2 : {
         // border-style: solid;
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
         height : '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center', 
         gridColumn: '1/3'
         // justifySelf : 'stretch'
     }     
@@ -131,7 +131,7 @@ function SingleColumnOfMFF(components){
 
 //Single ROw of mobile first elements
 function SingleRowOfMFF(components){
-    let formStruct = <Grid container direction='row' spacing={2} alignItems='center' justifyContent='space-around'>
+    let formStruct = <Grid container direction='row' spacing={2} alignItems='center' justify='space-around'>
         {components.map((c,i)=>{
         return <Grid item key={'grid-'+i}> {c}</Grid>
         })

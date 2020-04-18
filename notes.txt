@@ -55,3 +55,95 @@ git config --local diff.tool diffuse
 git config --local merge.tool diffuse
 
 git config --local --add difftool.prompt false
+----------------------------------------------------------
+installing react-redux and sagas
+
+
+https://hackernoon.com/redux-saga-tutorial-for-beginners-and-dog-lovers-aa69a17db645
+
+yarn add react-redux
+yarn add redux-saga
+yarn add axios
+
+Component Vs Container is no longer valid with hooks.
+
+organizing tips copied from https://decembersoft.com/posts/4-tips-for-managing-many-sagas-in-a-react-redux-saga-app/
+---------------
+
+2 ideas:
+---------
+Action creators can be auto generated using this helper:
+https://redux.js.org/recipes/reducing-boilerplate
+
+function makeActionCreator(type, ...argNames) {
+  return function(...args) {
+    const action = { type }
+    argNames.forEach((arg, index) => {
+      action[argNames[index]] = args[index]
+    })
+    return action
+  }
+}
+
+Reducers can also be auto generated.
+-----------------------------------------
+Provided convetion is followed for store-key
+data and data-status
+
+there is a problem in action type.
+It is quite FLAT.
+WHy not distinguish action meant for Reducer as R_ , Sagas as M_ , and both as MR_
+
+<ENTITY name> - should be 1-1 mapping with reducer or middleware.
+
+reducer should just merge the payload into the store.
+It should not be doing anything more than that => can be automated with minimal boiler plate code
+
+middleware should either push or pull data from the server.
+action could either be data_request -
+ GET methods - <MR>_<ENTITY>_<SUB.ENT>_<CR/UPD/GET/DEL/MISC>
+CREATE - POST
+/Update - PUT0
+Delete - DEL 
+--------------------------------------------------------
+One round of actions
+
+UI
+M_USER_GET
+
+MW fires
+R_USER_META to update request status
+
+MW fires
+R_USER_META to update request status and/or data
+
+----------------------
+UI updates the record
+M_USER_PUT
+
+MW_fires
+R_USER_META
+
+--------------------------------------------------------------
+Meta status
+ ->FETCH_NOT_INIT
+ ->READY
+ ->UPDATE_IN_PROGRESS
+ ->FETCH_IN_PROGRESS
+ ->UPDATE_FAILED
+ ->FETCH_FAILED
+-------------------------------------------------------------------
+Action FORMAT
+---------------
+{
+  type : <>
+  payload : {
+
+  }
+}
+----------------------------------
+action creator convention
+mUserGet
+mUserPut
+mUserPost
+rUserMeta
