@@ -33,13 +33,6 @@ PathFunctionMap.INVOICE 	= {
 	, component : undefined		
 };
 
-PathFunctionMap.INVOICE 	= {
-	path: "/invoice"	
-	, module:"invoice"
-	, func: ""
-	, component : undefined		
-};
-
 PathFunctionMap.CUSTOMER 	= {
 	path: "/customer"	
 	, module:"customer"

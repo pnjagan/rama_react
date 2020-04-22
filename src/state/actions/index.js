@@ -1,4 +1,5 @@
-import {deepStoreAssign,constants} from '../utils';
+import {constants} from '../utils';
+
 function makeActionCreator(type, ...argNames) {
   return function(...args) {
     const action = { type }
@@ -11,5 +12,5 @@ function makeActionCreator(type, ...argNames) {
 
 
 
-export const mLoginGet   = makeActionCreator(constants.M_LOGIN_GET, 'payload');
+export const mLoginPost   = makeActionCreator(constants.M_LOGIN_POST, 'payload');
 export const rLoginMeta  = makeActionCreator(constants.M_LOGIN_META, 'payload');

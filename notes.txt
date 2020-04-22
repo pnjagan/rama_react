@@ -127,9 +127,9 @@ R_USER_META
 --------------------------------------------------------------
 Meta status
  ->FETCH_NOT_INIT
+ ->FETCH_IN_PROGRESS
  ->READY
  ->UPDATE_IN_PROGRESS
- ->FETCH_IN_PROGRESS
  ->UPDATE_FAILED
  ->FETCH_FAILED
 -------------------------------------------------------------------
@@ -147,3 +147,8 @@ mUserGet
 mUserPut
 mUserPost
 rUserMeta
+-----------------------------------------------
+yarn add object-inspect
+
+Good explanation for useEffect
+https://daveceddia.com/useeffect-hook-examples/

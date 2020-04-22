@@ -47,6 +47,48 @@ label
 */
 // <TextField id="outlined-basic" label="Outlined" variant="outlined" />
 
+function RRTextFieldBuilder(props) {
+
+    this.props = props;
+    this.textValue = '';
+    this.getComponent = () => {
+        let fieldProps = {};
+
+        let textField = null;
+    
+        //small, medium, large
+        if(props.size){
+            fieldProps.size = props.size;
+        }
+        if(props.id) {
+            fieldProps.id = props.id;
+        } else {
+            fieldProps.id = 'RRTF-' + seqVal();
+        }
+        fieldProps.placeholder = props.placeholder;
+    
+        if(props.type){
+            fieldProps.type= props.type;
+        }
+        
+        if(props.label){
+            fieldProps.label= props.label;
+        }    
+    
+        textField = <TextField 
+        variant="outlined" 
+        {...fieldProps}
+        style = {{width : props.inputLen}}
+        onChange = {(e)=>{
+            this.textValue = e.target.value;
+        }}
+        />;
+    
+        return textField;
+    }
+
+}
+
 function RRTextField(props) {
 
     let fieldProps = {};
@@ -236,6 +278,25 @@ function RRButton(props) {
 }
 
 
+function RRButtonBuilder(props) {
+
+    this.props = props;
+    //onClickHandler to be handled
+
+    this.getComponent = () => {
+        // let fieldProps = {};
+
+        let buttonField = <Button variant="contained" onClick={props.clickHandler} >
+                            {props.caption}
+                        </Button>;
+    
+       
+    
+        return buttonField;
+    }
+
+}
+
 const linkStyle = makeStyles(theme=>{return {
     root: {
         padding : theme.spacing(1),
@@ -267,4 +328,13 @@ function RRLink(props) {
   
 // let  TBC = withTheme(BC);
 
-export {RRTextField,RRDateField,RRSelectField,RRCheckbox,RRButton,RRLink}
+export {
+        RRTextField
+        ,RRDateField
+        ,RRSelectField
+        ,RRCheckbox
+        ,RRButton
+        ,RRLink
+        ,RRTextFieldBuilder
+        ,RRButtonBuilder
+    }

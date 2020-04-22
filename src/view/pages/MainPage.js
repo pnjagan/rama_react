@@ -45,7 +45,7 @@ import Invoice from './Invoice';
 import { useHistory } from "react-router-dom";
 
 import {PathFunctionMap as CU} from '../shared/ConstantsUtils';
-
+import {log} from '../../state/utils';
 
 const useStyles = makeStyles(theme => ({
   }
@@ -54,9 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 function mapToContent(path) {
 
-  console.log('-path check-');
-  console.log(path);
-  console.log(CU.INV_CREATE.path);
+  log('-path check-',path);
 
   switch(path) {
     case CU.INV_CREATE.path : return <Invoice />;

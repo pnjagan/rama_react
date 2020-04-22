@@ -7,11 +7,7 @@ import 'typeface-roboto';
 
 import {BrowserRouter as Router } from 'react-router-dom'    
 
-
-
-
-
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { Provider } from "react-redux";
 

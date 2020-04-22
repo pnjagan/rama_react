@@ -8,6 +8,8 @@ import MainPage from './pages/MainPage'
 import WIP from './pages/WIP'
 import {PathFunctionMap as CU} from './shared/ConstantsUtils';
 import { Route, Switch} from 'react-router-dom'     
+import {log} from '../state/utils'
+import { useHistory,useLocation } from "react-router-dom";
 
 // SA uses following convention
 // /module/function?PARAM=VALUE
@@ -30,6 +32,34 @@ const pathsToMain = Object.entries(CU).reduce ( (newList,currEntry) => {
 
 
 function App(props) {
+
+  log('PROPS in APPS ',props);
+  const history = useHistory();
+  const location = useLocation();
+
+  // const a = localStorage.getItem('siaJWT') ;//undefined;
+  // const b = null;
+
+  // log(typeof(a));
+  log('token :' , localStorage.getItem('siaJWT'));
+
+  // log('COND: ',(localStorage.getItem('siaJWT') != null));
+  // log('NULL and undefined', a==b);
+
+  // log('CONDITION :', (localStorage.getItem('siaJWT') == null), (location.pathname !==CU.SIGN_IN.path) ,(location.pathname !==CU.REGISTER.path));
+
+  if(
+    (
+      localStorage.getItem('siaJWT') == null
+      || localStorage.getItem('siaJWT') === 'undefined'
+    ) 
+    && (location.pathname !==CU.SIGN_IN.path) 
+    && (location.pathname !==CU.REGISTER.path)
+  ) {
+
+    log('Inside PUSH');
+    history.push(CU.SIGN_IN.path);
+  }
 
   return (
 

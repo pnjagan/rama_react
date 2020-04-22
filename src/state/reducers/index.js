@@ -1,35 +1,43 @@
 
 import { combineReducers } from 'redux';
-import {deepStoreAssign as assignUtil} from '../utils';
+import {deepStoreAssign as assignUtil,log} from '../utils';
 import assign from 'lodash/assign';
 
 
+
 const initValue = {
-    data: {},
+    data: {
+      loggedUser:''
+    },
     meta :{
         status: 'NOT_REQUESTED',
         message: ''
     }
   }
 
-  const userRed = (state = assign({},initValue), action) => {
+  const loginRed = (state = assign({},initValue), action) => {
 
-    if(action.type == 'R_LOGIN_META'){
+    log('Reducer called with action :',action);
 
+
+    if(action.type === 'R_LOGIN_META'){
       //  let newState = assign({},state)
          return assignUtil(
             {}
             ,state
+            ,action.payload
          );
+    } else {
+      return state;
     }
   
-    return state
+    
   }
   
 
 
 const rootReducer = combineReducers({
-    userKey : userRed
+    loginKey : loginRed
  });
   
   export default rootReducer;

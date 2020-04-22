@@ -129,7 +129,7 @@ function SingleColumnOfMFF(components){
 }
 
 
-//Single ROw of mobile first elements
+//Single Row of mobile first elements
 function SingleRowOfMFF(components){
     let formStruct = <Grid container direction='row' spacing={2} alignItems='center' justify='space-around'>
         {components.map((c,i)=>{
