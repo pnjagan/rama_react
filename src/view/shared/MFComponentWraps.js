@@ -51,6 +51,7 @@ function RRTextFieldBuilder(props) {
 
     this.props = props;
     this.textValue = '';
+    
     this.getComponent = () => {
         let fieldProps = {};
 

@@ -33,21 +33,54 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import PersonIcon from '@material-ui/icons/Person';
+import { shadeBlendConvert, calculateBestTextColor } from "dead-simple-color-utils";
 
 
+const useStylesMenuItem = makeStyles(theme => ({
+    // labelMenu : {
+    //   textTransform: 'none',
+    //   margin: '1rem',
+    //   fontSize : '1.2rem'
 
-const useStyles = makeStyles(theme => ({
-    labelMenu : {
-      textTransform: 'none',
-      margin: '1rem',
-      fontSize : '1.2rem'
-
+    // }    
+    mi : {
+      borderStyle : 'solid',
+      borderWidth : '.05rem',
+      borderRadius : '.4rem',
+      margin : ' .2rem .5rem',
+      fontSize : '1.2rem',
+      padding: '.7rem',
+    },
+    ml : {
+      backgroundColor : shadeBlendConvert(theme.palette.primary.main,60)
     }    
   }
 ));  
 
+const useStylesLinkTypo = makeStyles(theme => ({
+  root : {
+    fontSize : '1.2rem',
+    padding: '1rem',
+    borderStyle : 'solid',
+    borderWidth : '.05rem',
+    borderRadius : '.4rem',
+    margin : ' .2rem .5rem',
+    backgroundColor : shadeBlendConvert(theme.palette.primary.main,-5),
+
+    '&:hover' : {
+      cursor : 'pointer'
+      ,backgroundColor : shadeBlendConvert(theme.palette.primary.main)
+      ,boxShadow : '.1rem .1rem .3rem .1rem'
+      // ,
+    }
+  },      
+}
+));
+
+
 export default function AppBarMenuList(props) {
-  const classes = useStyles();
+  const classesMI = useStylesMenuItem();
+  const typoClasses = useStylesLinkTypo();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -85,56 +118,29 @@ export default function AppBarMenuList(props) {
 
       <div>
 
-      {/* <Button
-            ref={anchorRef}
-            aria-controls={open ? 'menu-list-grow' : undefined}
-            aria-haspopup="true"
-            onClick={handleToggle}
-            color="inherit"
-            variant= { props.outline === "no"? "text":"outlined" }
-            className={classes.button}
-          >
-            <Typography variant="h6" >
-              {props.menuName}
-            </Typography>
-          </Button> 
-      */}
+        <Link 
+          ref={anchorRef}
+          onClick={handleToggle}
+          aria-haspopup="true"
+          aria-controls={open ? 'menu-list-grow' : undefined}
+          color="inherit"
+          // className={classes.labelMenu}
+          TypographyClasses={typoClasses}
+          underline = "none"
+        >
+              {
+              (
+                mn => {
+                  if(mn !== 'LoggedInUser') {
+                    return mn;
+                  } else {
+                    return <PersonIcon />;
+                  }
+              }
+            )(props.menuName)
+            }
 
-
-{
-(!props.link) ? (<Link 
-  ref={anchorRef}
-  onClick={handleToggle}
-  aria-haspopup="true"
-  aria-controls={open ? 'menu-list-grow' : undefined}
-  color="inherit"
-  className={classes.labelMenu}
->
-    {/* <Typography variant="h6" > */}
-    
-      {
-      (
-        mn => {
-          if(mn !== 'LoggedInUser') {
-            return mn;
-          } else {
-            return <PersonIcon />;
-          }
-      }
-     )(props.menuName)
-    }
-
-</Link>) : (
-    <Link 
-      color="inherit"
-      className={classes.labelMenu}
-    >
-    {props.menuName }
-  </Link>
-) 
-}
-          
-
+        </Link>
 
 
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
@@ -145,8 +151,10 @@ export default function AppBarMenuList(props) {
             >
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
-                          <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                            { props.menuItems.map( (item , i)=> <MenuItem onClick={item.itemHandler} key={i}> {item.itemName} </MenuItem>)  }
+                          <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} className={classesMI.ml}>
+                            { props.menuItems.map( (item , i)=> 
+                              <MenuItem onClick={item.itemHandler} key={i} className={classesMI.mi}> {item.itemName} </MenuItem>)  
+                            }
                           </MenuList>
                 </ClickAwayListener>
               </Paper>

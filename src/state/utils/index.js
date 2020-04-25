@@ -10,11 +10,6 @@ let deepStoreAssign = (objDest, ...objectList) => {
 }
 
 
-let constants = {
-    M_LOGIN_POST    : 'M_LOGIN_POST',
-    R_LOGIN_META   : 'R_LOGIN_META'
-}
-
 let log = (...args) => {
     let str = '';
     for ( let item of args ) {
@@ -28,4 +23,4 @@ let log = (...args) => {
     console.log(str);
 }
 
-export {deepStoreAssign,constants,log}
+export {deepStoreAssign,log}

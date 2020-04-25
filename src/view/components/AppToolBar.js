@@ -37,15 +37,34 @@ import AppBarMenuList from './AppBarMenuList';
 
 import HamburgerMenu from './HamburgerMenu';
 import AppsIcon from '@material-ui/icons/Apps';
-
+import { shadeBlendConvert, calculateBestTextColor } from "dead-simple-color-utils";
 
 
 
 const useStyles = makeStyles(theme => ({
-    title : {
+  homeLink : {
 
-    },      
   }
+  }
+));
+
+const useStylesLinkTypo = makeStyles(theme => ({
+  root : {
+    fontSize : '1.2rem',
+    padding: '1rem',
+    borderStyle : 'solid',
+    borderWidth : '.05rem',
+    borderRadius : '.4rem',
+    margin : ' .2rem .5rem',
+    backgroundColor : shadeBlendConvert(theme.palette.primary.main,-5),
+    '&:hover' : {
+      cursor : 'pointer'
+      ,backgroundColor : shadeBlendConvert(theme.palette.primary.main)
+      ,boxShadow : '.1rem .1rem .3rem .1rem'
+      // ,
+    }
+  },      
+}
 ));
 
 export default function ButtonAppBar() {
@@ -53,48 +72,71 @@ export default function ButtonAppBar() {
   const theme = useTheme();
 
    const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-
-
+  const typoClasses = useStylesLinkTypo();
 
   return (
 
       <AppBar position="static">
         <Toolbar style={{display: 'flex'}}>
 
-        <a onClick={e=>console.log('ALert')}><AppsIcon/></a>
+        {/* <a onClick={e=>console.log('ALert')} 
+        className = {classes.homeLink}
+        ></a> */}
+          <Link 
+              color="inherit"
+              TypographyClasses={typoClasses}
+              underline = "none"
+              // className = {classes.toolBarLink}
+            >
+
+              <AppsIcon/>
+          </Link>
               
 
+{/* We cam modify it to flow from the left like a slide window
+But looking at menu options, it looks like hamburger does not add any value
+It is still just 2 clicks for mobile user, hence removing it.
+Mobile user should go through the main MENU
+---------------------------
           <Hidden mdUp>
+            
             <HamburgerMenu />
-        {/*
-            <AppBarMenuList menuName="Items" hamburgerMenu="Y" menuItems={ [ 
-            {itemName : "Invoice"         , itemHandler: null}
-            ,{itemName : "Items"     , itemHandler: null}
-            ,{itemName : "Customers"    , itemHandler: null}
-            ,{itemName : "Config" , itemHandler: null}                
-            ] }/>
-        */}
           </Hidden>
+------------------------------
+*/}
+
+
 
         <Hidden smDown>
 
-          <AppBarMenuList link menuName="Invoice" menuItems={ [ 
-              {itemName : "New"     , itemHandler: null}
-              ,{itemName : "Search" , itemHandler: null}  
-            ] }/>
+          <Link 
+              color="inherit"
+              TypographyClasses={typoClasses}
+              underline = "none"
+              // className = {classes.toolBarLink}
+            >
+            Invoice
+          </Link>
 
-          <AppBarMenuList menuName="Items" menuItems={ [ 
-                {itemName : "New"         , itemHandler: null}
-                ,{itemName : "Search"     , itemHandler: null}
-                ,{itemName : "Pricing"    , itemHandler: null}
-                ,{itemName : "Categories" , itemHandler: null}                
-            ] }/>
+          <Link 
+              color="inherit"
+              TypographyClasses={typoClasses}
+              underline = "none"
+              // className = {classes.toolBarLink}
+            >
+            Items
+          </Link>
 
-          <AppBarMenuList menuName="Customers" menuItems={ [
-              {itemName : "New", itemHandler: null}
-              ,{itemName : "Search", itemHandler: null}
-            ] }/>
+          <Link 
+              color="inherit"
+              TypographyClasses={typoClasses}
+              underline = "none"
+              // className = {classes.toolBarLink}
+            >
+            Customers
+          </Link>          
 
+      
           <AppBarMenuList menuName="Configurations" menuItems={ [ 
             {itemName : "Parameters", itemHandler: null}
             ,{itemName : "User Management", itemHandler: null}
@@ -107,14 +149,14 @@ export default function ButtonAppBar() {
         <Toolbar style={{ justifyContent: 'flex-end' ,flexGrow: '1' }}> 
 
           <AppBarMenuList menuName="Help" menuItems={ [
-             {itemName : "User account", itemHandler: null}
+            //  {itemName : "User account", itemHandler: null}
              ,{itemName : "online help", itemHandler: null}
              ,{itemName : "Contact us", itemHandler: null}  
              ] }/>
 
-          <AppBarMenuList menuName="LoggedInUser" outline="no" menuItems={ [
+          {/* <AppBarMenuList menuName="LoggedInUser" outline="no" menuItems={ [
              {itemName : "Logout", itemHandler: null}
-             ] }/>
+             ] }/> */}
 
         </Toolbar>
        </Toolbar>

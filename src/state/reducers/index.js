@@ -2,6 +2,7 @@
 import { combineReducers } from 'redux';
 import {deepStoreAssign as assignUtil,log} from '../utils';
 import assign from 'lodash/assign';
+import {actionTypes} from '../actions'
 
 
 
@@ -20,7 +21,10 @@ const initValue = {
     log('Reducer called with action :',action);
 
 
-    if(action.type === 'R_LOGIN_META'){
+    if(
+        action.type === actionTypes.R_LOGIN_META
+        || action.type === actionTypes.R_LOGOUT_META
+    ){
       //  let newState = assign({},state)
          return assignUtil(
             {}

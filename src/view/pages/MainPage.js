@@ -46,6 +46,7 @@ import { useHistory } from "react-router-dom";
 
 import {PathFunctionMap as CU} from '../shared/ConstantsUtils';
 import {log} from '../../state/utils';
+import WIPPage from './WIP'
 
 const useStyles = makeStyles(theme => ({
   }
@@ -57,8 +58,8 @@ function mapToContent(path) {
   log('-path check-',path);
 
   switch(path) {
-    case CU.INV_CREATE.path : return <Invoice />;
-     default : return <ContentIndex/>;
+    case CU.HOME.path : return <ContentIndex />;
+     default : return <WIPPage/>;
   }
 
 }
@@ -86,7 +87,7 @@ function MainPage(props) {
       <AppToolBar />
 
       
-      {/* {mapToContent(history.location.pathname)} */}
+      {mapToContent(history.location.pathname)}
     
     </React.Fragment>
   );

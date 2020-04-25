@@ -28,7 +28,7 @@ export const callAPI = (endPoint,method ,data) => {
 
     return axios[method](endPoint,data,config).then(
         response => {
-            // log('Success of req: ',response);
+            log('Success API: ',response);
             return {
                 status : response.status,
                 statusText : response.statusText,
@@ -36,12 +36,23 @@ export const callAPI = (endPoint,method ,data) => {
             };
         },
         error => {
-            // log('Error object :',error);
-            return {
-                status : error.response.status,
-                statusText : error.response.statusText,
-                serverResponse : error.response.data
-            };
+            log('Error API :',error);
+
+            if(error.isAxiosError == null) {
+                //server error
+                return {
+                    status : error.response.status,
+                    statusText : error.response.statusText,
+                    serverResponse : error.response.data
+                };
+            } else {
+                return {
+                    status : 'AXIOS_ERROR',
+                    statusText :'AXIOS_ERROR',
+                    serverResponse : 'AXIOS_ERROR'
+                };
+            }         
+
         }
     )
 };

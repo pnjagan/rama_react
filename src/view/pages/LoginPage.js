@@ -113,9 +113,9 @@ function LoginPage() {
 
 
 
-  let userNameTFB = new RRTextFieldBuilder({
+  let userLoginTFB = new RRTextFieldBuilder({
     size : 'medium',
-    label : 'Username',
+    label : 'Userlogin',
     placeholder : 'name@domain.com',
     inputLen : '20rem'    
   });
@@ -126,6 +126,15 @@ function LoginPage() {
     inputLen : '20rem',
     type: 'password' 
   });
+/////////////////////
+let userNameTFB = new RRTextFieldBuilder({
+  size : 'medium',
+  label : 'UserName',
+  placeholder : 'Firstname Lastname',
+  inputLen : '20rem'    
+});
+
+
 
 
   // let userNameTF = RRTextField ({
@@ -150,27 +159,42 @@ function LoginPage() {
     clickHandler : 
       () => {
         log('ON click handler button');
-        log('username:',userNameTFB.textValue);
+        log('username:',userLoginTFB.textValue);
         log('password:',passwordTFB.textValue);
 
         dispatch(mLoginPost({
-          userLogin: userNameTFB.textValue,
+          userLogin: userLoginTFB.textValue,
           password: passwordTFB.textValue
         }));
       }
   });
 
+  let registerButtonB = new RRButtonBuilder({
+    caption : 'Register',
+    clickHandler : 
+      () => {
+        log('ON click handler button');
+        log('userlogin:',userLoginTFB.textValue);
+        log('password:',passwordTFB.textValue);
+        log('username:',userNameTFB.textValue);
+
+        // dispatch(mLoginPost({
+        //   userLogin: userLoginTFB.textValue,
+        //   password: passwordTFB.textValue
+        // }));
+      }
+  });
+
   let forgotLink =RRLink({text: 'Forgot password'});
 
-  let newUserLink = RRLink({text:'New user'});
-
-  let srf  = SingleRowOfMFF([loginButtonB.getComponent(),forgotLink])
-  let scf = SingleColumnOfMFF([title
-                              ,userNameTFB.getComponent()
+  let loginForgotRow  = SingleRowOfMFF([loginButtonB.getComponent(),forgotLink])
+  let loginColumn = SingleColumnOfMFF([title
+                              ,userLoginTFB.getComponent()
                               ,passwordTFB.getComponent()
-                              ,srf
+                              ,loginForgotRow
                               ]
                             ); //,newUserLink
+/////////////////////////////////////////////////////////
 
   return (
     <React.Fragment>
@@ -189,7 +213,7 @@ function LoginPage() {
                   </Tabs>
 
                   <TabPanel value={tabValue} index={0}>
-                    {scf}  
+                    {loginColumn}  
                   </TabPanel>
                   <TabPanel value={tabValue} index={1}>
                     Register

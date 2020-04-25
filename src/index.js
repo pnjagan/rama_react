@@ -17,11 +17,6 @@ import  rootSaga  from "./state/sagas";
 let log = console.log;
 
 //import * as serviceWorker from './serviceWorker';
-
-
-
-
-
 //being the entry point, importing roboto
 
 
