@@ -2,6 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles({
   gc2: {
@@ -184,6 +185,45 @@ export function FlowLayout(props) {
     </Grid>
   );
 }
+
+/*
+// not long ago , 1024 was considered desktop standard, but now less than 6% use that 
+https://gs.statcounter.com/screen-resolution-stats/desktop/india
+SO it safe to keep then as part of TAB
+
+ideally we need only 2 layouts. but depending on screen size we need to decide when to breal columns, is it for TAB or mobiles
+--------------------------------------------
+
+// 0 very small- mobile = 0 to 959
+// 1 TAB = 960 to 1279
+// 2 desktop = 1280 to +
+
+xs, extra-small: 0px - 599
+sm, small: 600px - 959
+md, medium: 960px - 1279
+lg, large: 1280px - 1919
+xl, extra-large: 1920px +
+
+FOr MOBILE, assume 320PX iphone SE as base
+
+export function getDevice() {
+  let deviceType = 0;
+
+  if (useMediaQuery((theme) => theme.breakpoints.between("xs", "sm"))) {
+    deviceType = 0;
+  }
+
+  if (useMediaQuery((theme) => theme.breakpoints.between("md"))) {
+    deviceType = 1;
+  }
+
+  if (useMediaQuery((theme) => theme.breakpoints.up("lg"))) {
+    deviceType = 2;
+  }
+
+  return deviceType;
+}
+*/
 
 //Single Row of mobile first elements
 function SingleRowOfMFF(components) {

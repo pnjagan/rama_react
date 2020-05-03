@@ -1,74 +1,66 @@
-
-
 const PathFunctionMap = Object.create(null);
 
-PathFunctionMap.HOME       = {
-	path	: "/"				
-	,module	: ""			
-	,func	: ""
-	,component : undefined	
+PathFunctionMap.HOME = {
+  path: "/",
+  module: "",
+  func: "",
+  component: undefined,
 };
 
-
-
-PathFunctionMap.SIGN_IN 	= {
-	path	: "/signin"
-	,module	:"signin"
-	,func	: ""
-	,component : undefined
+PathFunctionMap.SIGN_IN = {
+  path: "/signin",
+  module: "signin",
+  func: "",
+  component: undefined,
 };
 
-PathFunctionMap.REGISTER 	= {
-	path: "/register"
-	, module:"register"	
-	, func: ""
-	, component : undefined	
+PathFunctionMap.REGISTER = {
+  path: "/register",
+  module: "register",
+  func: "",
+  component: undefined,
 };
 
-
-PathFunctionMap.INVOICE 	= {
-	path: "/invoice"	
-	, module:"invoice"
-	, func: ""
-	, component : undefined		
+PathFunctionMap.INVOICE = {
+  path: "/invoice",
+  module: "invoice",
+  func: "",
+  component: undefined,
 };
 
-PathFunctionMap.CUSTOMER 	= {
-	path: "/customer"	
-	, module:"customer"
-	, func: ""
-	, component : undefined		
+PathFunctionMap.CUSTOMER = {
+  path: "/customer",
+  module: "customer",
+  func: "",
+  component: undefined,
 };
 
-
-PathFunctionMap.CONFIG 	= {
-	path: "/config"	
-	, module:"config"
-	, func: ""
-	, component : undefined		
+PathFunctionMap.CONFIG = {
+  path: "/config",
+  module: "config",
+  func: "",
+  component: undefined,
 };
 
-
-PathFunctionMap.CONFIG_PARAM	= {
-	path: "/config/param"	
-	, module:"config"
-	, func: "params"
-	, component : undefined		
+PathFunctionMap.CONFIG_PARAM = {
+  path: "/config/param",
+  module: "config",
+  func: "params",
+  component: undefined,
 };
 
-
-PathFunctionMap.CONFIG_USER 	= {
-	path: "/config/user"	
-	, module:"config"
-	, func: "user"
-	, component : undefined		
+PathFunctionMap.CONFIG_USER = {
+  path: "/config/user",
+  module: "config",
+  func: "user",
+  component: undefined,
 };
 
-PathFunctionMap.CONFIG_TAX 	= {
-	path: "/config/tax"	
-	, module:"config"
-	, func: "tax"
-	, component : undefined		
+PathFunctionMap.CONFIG_TAX = {
+  path: "/config/tax",
+  module: "config",
+  func: "tax",
+  component: undefined,
 };
 
 /*
@@ -100,5 +92,13 @@ const PathFunctionMap = {
 
 Object.freeze(PathFunctionMap);
 
-export {PathFunctionMap}
+const Display = {
+  MOBILE: 0,
+  TAB: 1,
+  DESK: 2,
+  UNKNOWN: -1,
+};
 
+Object.freeze(Display);
+
+export { PathFunctionMap, Display };

@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 import {
   CssBaseline,
@@ -16,6 +18,7 @@ import {
   SingleColumnOfMFF,
   SingleRowOfMFF,
   FlowLayout,
+  getDevice,
 } from "../shared/LayoutHelper";
 
 import {
@@ -36,7 +39,7 @@ import { mLoginPost } from "../../state/actions";
 import { log } from "../../state/utils";
 
 import { useHistory } from "react-router-dom";
-import { PathFunctionMap as CU } from "../shared/ConstantsUtils";
+import { PathFunctionMap as CU, Display } from "../shared/ConstantsUtils";
 
 const useStyles = makeStyles((theme) => ({
   mainCanvas: {
@@ -96,6 +99,17 @@ function LoginPage() {
       history.push(CU.HOME.path);
     }
   });
+  const theme = useTheme();
+
+  let deviceType = useMediaQuery(theme.breakpoints.down("sm"))
+    ? Display.MOBILE
+    : Display.UNKNOWN;
+
+  deviceType = useMediaQuery(theme.breakpoints.between("md", "md"))
+    ? Display.TAB
+    : deviceType === Display.UNKNOWN
+    ? Display.DESK
+    : deviceType;
 
   const TabPanel = (props) => {
     return props.index === props.value ? <div> {props.children}</div> : null;
@@ -238,6 +252,16 @@ function LoginPage() {
               </TabPanel>
               <TabPanel value={tabValue} index={1}>
                 Register
+                <button
+                  type="button"
+                  name="deviceType"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("device :" + deviceType);
+                  }}
+                >
+                  Click me to know the device
+                </button>
               </TabPanel>
             </Box>
           </form>
