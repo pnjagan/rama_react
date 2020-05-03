@@ -23,5 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 /.project
 
-#dont commit backup files
+#dont commit backup files and logs
 *bkp
+

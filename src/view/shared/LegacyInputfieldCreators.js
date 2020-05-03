@@ -1,27 +1,24 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import React from "react";
+import TextField from "@material-ui/core/TextField";
 
-import InputLabel from '@material-ui/core/InputLabel';
-
+import InputLabel from "@material-ui/core/InputLabel";
 
 import {
-	MuiPickersUtilsProvider,
-	KeyboardDatePicker,
-  } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
+import FormControl from "@material-ui/core/FormControl";
 
-import FormControl from '@material-ui/core/FormControl';
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from "@material-ui/core/Checkbox";
 
-import Checkbox from '@material-ui/core/Checkbox';
+import { Button, Link } from "@material-ui/core";
 
-
-import { Button,Link} from '@material-ui/core';
-
-import seqVal from './SequenceGen';
+import seqVal from "./SequenceGen";
 
 //size = small or mediem
 //label
@@ -30,199 +27,193 @@ import seqVal from './SequenceGen';
 
 //Any function that returns JSX expressins should start with Capital letters.
 
-import { withTheme } from '@material-ui/core/styles';
-
+import { withTheme } from "@material-ui/core/styles";
 
 function BuildRRTextField(props) {
+  let fieldProps = {};
 
-    let fieldProps = {};
+  let textField = null;
+  let tfLabel = null;
 
-    let textField = null;
-    let tfLabel = null;
-    
-    if(props.size && (props.size==='small' || props.size === 'medium')){
-        fieldProps.size = props.size;
-    }
-    if(props.id) {
-        fieldProps.id = props.id;
-    } else {
-        fieldProps.id = 'RRTF-' + seqVal();
-    }
-    fieldProps.placeholder = props.placeholder;    
-    if(props.type){
-        fieldProps.type="password";
-    }
-    
-    
+  if (props.size && (props.size === "small" || props.size === "medium")) {
+    fieldProps.size = props.size;
+  }
+  if (props.id) {
+    fieldProps.id = props.id;
+  } else {
+    fieldProps.id = "RRTF-" + seqVal();
+  }
+  fieldProps.placeholder = props.placeholder;
+  if (props.type) {
+    fieldProps.type = "password";
+  }
 
-    tfLabel = <InputLabel >{props.label}</InputLabel>;
+  tfLabel = <InputLabel>{props.label}</InputLabel>;
 
-    textField =     <TextField 
-    variant="outlined" 
-    {...fieldProps}
-    style = {{width : props.inputLen}}
-    />;
+  textField = (
+    <TextField
+      variant="outlined"
+      {...fieldProps}
+      style={{ width: props.inputLen }}
+    />
+  );
 
-    return [tfLabel,textField];
-
-};
-
+  return [tfLabel, textField];
+}
 
 //size = small or mediem
 //label
 //inputLen = length of text field in chars
 
 function BuildRRDateField(props) {
+  let fieldProps = {};
 
-    let fieldProps = {};
+  let dateField = null;
+  let tfLabel = null;
 
-    let dateField = null;
-    let tfLabel = null;
-    
-    if(props.size && (props.size==='small' || props.size === 'medium')){
-        fieldProps.size = props.size;
-    }
+  if (props.size && (props.size === "small" || props.size === "medium")) {
+    fieldProps.size = props.size;
+  }
 
-    if(props.id) {
-        fieldProps.id = props.id;
-    } else {
-        fieldProps.id = 'date-picker-inline-' + seqVal();
-    }
+  if (props.id) {
+    fieldProps.id = props.id;
+  } else {
+    fieldProps.id = "date-picker-inline-" + seqVal();
+  }
 
-    tfLabel = <InputLabel > {props.label} </InputLabel>;
+  tfLabel = <InputLabel> {props.label} </InputLabel>;
 
-    const [localDate, setLocalDate] = React.useState(new Date());
-    
-    //KeyboardDatePicker is built on MuiTextField    
+  const [localDate, setLocalDate] = React.useState(new Date());
 
-    dateField =  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-	<KeyboardDatePicker
-          disableToolbar
-          variant="inline"	
-          format="yyyy-MM-dd"
-          margin="normal"
-          id= {fieldProps.id}
-          value={localDate}
-          onChange={setLocalDate}
-          style = {{width : props.inputLen}}
-          size = {fieldProps.size}
+  //KeyboardDatePicker is built on MuiTextField
 
-        />
- </MuiPickersUtilsProvider>;
+  dateField = (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <KeyboardDatePicker
+        disableToolbar
+        variant="inline"
+        format="yyyy-MM-dd"
+        margin="normal"
+        id={fieldProps.id}
+        value={localDate}
+        onChange={setLocalDate}
+        style={{ width: props.inputLen }}
+        size={fieldProps.size}
+      />
+    </MuiPickersUtilsProvider>
+  );
 
-  return [tfLabel,dateField];
-
-};
-
+  return [tfLabel, dateField];
+}
 
 //size = small or mediem
 //label
 //inputLen = length of text field in chars
 //lov - values to show
 function BuildRRSelectField(props) {
+  let fieldProps = {};
 
-    let fieldProps = {};
+  let selectField = null;
+  let tfLabel = null;
 
-    let selectField = null;
-    let tfLabel = null;
-    
-    if(props.size && (props.size==='small' || props.size === 'medium')){
-        fieldProps.size = props.size;
-    }
+  if (props.size && (props.size === "small" || props.size === "medium")) {
+    fieldProps.size = props.size;
+  }
 
-    if(props.id) {
-        fieldProps.id = props.id;
-    } else {
-        fieldProps.id = 'select-' + seqVal();
-    }
-    
+  if (props.id) {
+    fieldProps.id = props.id;
+  } else {
+    fieldProps.id = "select-" + seqVal();
+  }
 
-    tfLabel = <InputLabel > {props.label} </InputLabel>;
+  tfLabel = <InputLabel> {props.label} </InputLabel>;
 
-	const [localSelect, setLocalSelect] = React.useState('');
+  const [localSelect, setLocalSelect] = React.useState("");
 
-	const handleSelectChange = (event) => {
-        setLocalSelect(event.target.value);
-	};
+  const handleSelectChange = (event) => {
+    setLocalSelect(event.target.value);
+  };
 
-    selectField =   <FormControl>
-       <Select
-           id= {fieldProps.id}
-           value={localSelect}
-           onChange={e => handleSelectChange(e)}
-           style = {{width : props.inputLen}}
-       >
-           {
-               props.lov.map( (currVal,ind) => {
-                        return (
-                            <MenuItem key={ind} value={currVal.id}> {currVal.value} </MenuItem>
-                        );
-                    }
-               )
-           }
-       </Select>
+  selectField = (
+    <FormControl>
+      <Select
+        id={fieldProps.id}
+        value={localSelect}
+        onChange={(e) => handleSelectChange(e)}
+        style={{ width: props.inputLen }}
+      >
+        {props.lov.map((currVal, ind) => {
+          return (
+            <MenuItem key={ind} value={currVal.id}>
+              {" "}
+              {currVal.value}{" "}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    </FormControl>
+  );
 
-       </FormControl>;
+  return [tfLabel, selectField];
+}
 
-  return [tfLabel,selectField];
-
-};
-
-//label 
+//label
 //ID
 //default
 function BuildRRCheckbox(props) {
+  let fieldProps = {};
 
-    let fieldProps = {};
+  let checkbox = null;
+  let tfLabel = null;
 
-    let checkbox = null;
-    let tfLabel = null;
-    
+  if (props.id) {
+    fieldProps.id = props.id;
+  } else {
+    fieldProps.id = "RRTF-" + seqVal();
+  }
 
-    if(props.id) {
-        fieldProps.id = props.id;
-    } else {
-        fieldProps.id = 'RRTF-' + seqVal();
-    }
+  tfLabel = <InputLabel> {props.label} </InputLabel>;
 
-    
+  // inputProps={{ 'aria-label': 'checkbox with default color' }}
+  checkbox = (
+    <Checkbox
+      defaultChecked={props.default}
+      id={fieldProps.id}
+      color="default"
+    />
+  );
 
-    tfLabel = <InputLabel > {props.label} </InputLabel>;
-
-// inputProps={{ 'aria-label': 'checkbox with default color' }}
-    checkbox = <Checkbox
-        defaultChecked = { props.default}
-        id = {fieldProps.id }
-        color="default"
- 
-    />;
-
-    return [tfLabel,checkbox];
-
-};
+  return [tfLabel, checkbox];
+}
 
 //caption
 function BuildButton(props) {
-    return <Button variant="contained" >
-  {props.caption}
-</Button>;
+  return <Button variant="contained">{props.caption}</Button>;
 }
 
 function BC(props) {
-    console.log(JSON.stringify(props.theme,null,2));
-    return <div>{props.theme.direction}</div>;
-
+  console.log(JSON.stringify(props.theme, null, 2));
+  return <div>{props.theme.direction}</div>;
 }
 //props.text
 function BuildLink(props) {
-
-    //className={} to be added to LINK
-    const preventDefault = event => event.preventDefault();    
-    return                 <Link  href="#" onClick={preventDefault} >
-    {props.text}
-  </Link>  
+  //className={} to be added to LINK
+  const preventDefault = (event) => event.preventDefault();
+  return (
+    <Link href="#" onClick={preventDefault}>
+      {props.text}
+    </Link>
+  );
 }
-  
-let  TBC = withTheme(BC);
 
-export {BuildRRTextField,BuildRRDateField,BuildRRSelectField,BuildRRCheckbox,BuildButton,BuildLink,TBC};
+let TBC = withTheme(BC);
+
+export {
+  BuildRRTextField,
+  BuildRRDateField,
+  BuildRRSelectField,
+  BuildRRCheckbox,
+  BuildButton,
+  BuildLink,
+  TBC,
+};

@@ -53,11 +53,16 @@ Edit , download and more details are nowadays implemented as a hover links, rath
 ---------------------------------------------
 git config --local diff.tool diffuse
 git config --local merge.tool diffuse
-
 git config --local --add difftool.prompt false
 ----------------------------------------------------------
 installing react-redux and sagas
-
+--------------------------------------------
+HTTPS is easier to setup
+Password is added to Global git creds
+---
+jagannathan@jagannathan-Inspiron-3593:~$ more .git-credentials 
+https://pnjagan%40gmail.com:Rama%24123@github.com
+-------------------------------------------
 
 https://hackernoon.com/redux-saga-tutorial-for-beginners-and-dog-lovers-aa69a17db645
 
@@ -169,3 +174,5 @@ STORE structure:
       message: ''
   }
 }
+----------------------------------------------------
+https://kentcdodds.com/blog/dont-call-a-react-function-component
