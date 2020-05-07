@@ -289,20 +289,6 @@ function RRButtonBuilder(props) {
   };
 }
 
-const linkStyle = makeStyles((theme) => {
-  return {
-    root: {
-      padding: theme.spacing(1),
-      backgroundColor: theme.palette.grey[100],
-      margin: 0,
-      borderRadius: ".5rem",
-      "&:hover": {
-        backgroundColor: theme.palette.grey[200],
-      },
-    },
-  };
-});
-
 //props.text
 function RRLink(props) {
   const preventDefault = (event) => event.preventDefault();
@@ -323,13 +309,28 @@ function RRLink(props) {
 
 // let  TBC = withTheme(BC);
 
-export {
-  RRTextField,
-  RRDateField,
-  RRSelectField,
-  RRCheckbox,
-  RRButton,
-  RRLink,
-  RRTextFieldBuilder,
-  RRButtonBuilder,
-};
+// export {
+//   RRTextField,
+//   RRDateField,
+//   RRSelectField,
+//   RRCheckbox,
+//   RRButton,
+//   RRLink,
+//   RRTextFieldBuilder,
+//   RRButtonBuilder,
+//   // linkStyle,
+// };
+
+export const linkStyle = makeStyles((theme) => {
+  return {
+    root: {
+      padding: theme.spacing(1),
+      backgroundColor: theme.palette.grey[100],
+      margin: 0,
+      borderRadius: ".5rem",
+      "&:hover": {
+        backgroundColor: theme.palette.grey[200],
+      },
+    },
+  };
+});

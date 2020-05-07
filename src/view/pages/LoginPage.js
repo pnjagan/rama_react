@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
+// import { useTheme } from "@material-ui/core/styles";
 
 import {
   CssBaseline,
@@ -21,16 +21,7 @@ import {
   getDevice,
 } from "../shared/LayoutHelper";
 
-import {
-  RRTextField,
-  RRDateField,
-  RRSelectField,
-  RRCheckbox,
-  RRButton,
-  RRLink,
-  RRTextFieldBuilder,
-  RRButtonBuilder,
-} from "../shared/MFComponentWraps";
+import { linkStyle } from "../shared/MFComponentWraps";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -90,6 +81,7 @@ function LoginPage() {
   let dispatch = useDispatch();
 
   let history = useHistory();
+  let linkClass = linkStyle();
 
   //Find when state has changed
   const loginState = useSelector((state) => state.loginKey);
@@ -99,17 +91,20 @@ function LoginPage() {
       history.push(CU.HOME.path);
     }
   });
-  const theme = useTheme();
-
-  let deviceType = useMediaQuery(theme.breakpoints.down("sm"))
+  // const theme = useTheme();
+  // let deviceType = Display.UNKNOWN;
+  /*
+  deviceType = useMediaQuery(theme.breakpoints.down("sm"))
     ? Display.MOBILE
     : Display.UNKNOWN;
 
-  deviceType = useMediaQuery(theme.breakpoints.between("md", "md"))
-    ? Display.TAB
-    : deviceType === Display.UNKNOWN
+  deviceType = useMediaQuery(theme.breakpoints.up("lg"))
     ? Display.DESK
+    : deviceType === Display.UNKNOWN
+    ? Display.TAB
     : deviceType;
+*/
+  log("inside RENDER of login");
 
   const TabPanel = (props) => {
     return props.index === props.value ? <div> {props.children}</div> : null;
@@ -124,95 +119,13 @@ function LoginPage() {
 
   const classes = useStyles();
 
-  const preventDefault = (event) => event.preventDefault();
-
   let title = (
     <Typography variant="h5" className={classes.defaultElement}>
       SriRam Invoice
     </Typography>
   );
 
-  let userLoginTFB = new RRTextFieldBuilder({
-    size: "medium",
-    label: "Userlogin",
-    placeholder: "name@domain.com",
-    inputLen: "20rem",
-  });
-
-  let passwordTFB = new RRTextFieldBuilder({
-    size: "medium",
-    label: "Password",
-    inputLen: "20rem",
-    type: "password",
-  });
-  /////////////////////
-  let userNameTFB = new RRTextFieldBuilder({
-    size: "medium",
-    label: "UserName",
-    placeholder: "Firstname Lastname",
-    inputLen: "20rem",
-  });
-
-  // let userNameTF = RRTextField ({
-  //   size : 'medium',
-  //   label : 'Username',
-  //   placeholder : 'name@domain.com',
-  //   inputLen : '20rem'
-  // });
-
-  // let passwordTF = RRTextField ({
-  //   size : 'medium',
-  //   label : 'Password',
-  //   // placeholder : 'name@domain.com',
-  //   inputLen : '20rem',
-  //   type: 'password'
-  // });
-
-  let loginButtonB = new RRButtonBuilder({
-    caption: "Login",
-    clickHandler: () => {
-      log("ON click handler button");
-      log("username:", userLoginTFB.textValue);
-      log("password:", passwordTFB.textValue);
-
-      dispatch(
-        mLoginPost({
-          userLogin: userLoginTFB.textValue,
-          password: passwordTFB.textValue,
-        })
-      );
-    },
-  });
-
-  let registerButtonB = new RRButtonBuilder({
-    caption: "Register",
-    clickHandler: () => {
-      log("ON click handler button");
-      log("userlogin:", userLoginTFB.textValue);
-      log("password:", passwordTFB.textValue);
-      log("username:", userNameTFB.textValue);
-
-      // dispatch(mLoginPost({
-      //   userLogin: userLoginTFB.textValue,
-      //   password: passwordTFB.textValue
-      // }));
-    },
-  });
-
-  let forgotLink = RRLink({ text: "Forgot password" });
-
-  let loginForgotRow = SingleRowOfMFF([
-    loginButtonB.getComponent(),
-    forgotLink,
-  ]);
-
-  let loginColumn = SingleColumnOfMFF([
-    title,
-    userLoginTFB.getComponent(),
-    passwordTFB.getComponent(),
-    loginForgotRow,
-  ]); //,newUserLink
-  /////////////////////////////////////////////////////////
+  // let forgotLink = RRLink({ text: "Forgot password" });
 
   return (
     <React.Fragment>
@@ -243,25 +156,53 @@ function LoginPage() {
               </Tabs>
 
               <TabPanel value={tabValue} index={0}>
-                {loginColumn}
-                {/* <FlowLayout column>
-                  <p>Rama</p>
-                  <p>Krishna</p>
-                  <p>Govinda</p>
-                </FlowLayout> */}
+                {/* {loginColumn} */}
+                <FlowLayout column>
+                  {title}
+                  <TextField
+                    size="medium"
+                    label="Userlogin"
+                    variant="outlined"
+                    placeholder="name@domain.com"
+                  />
+                  <TextField
+                    size="medium"
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                  />
+                  <FlowLayout>
+                    <Button
+                      variant="contained"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        dispatch(
+                          mLoginPost({
+                            userLogin: "",
+                            password: "",
+                          })
+                        );
+                      }}
+                    >
+                      Login
+                    </Button>
+                    <Link href="#" onClick={(e) => e.preventDefault()}>
+                      <Typography className={linkClass.root}>
+                        Forgot password
+                      </Typography>
+                    </Link>
+                  </FlowLayout>
+                </FlowLayout>
               </TabPanel>
               <TabPanel value={tabValue} index={1}>
-                Register
-                <button
-                  type="button"
-                  name="deviceType"
+                {/* <button
                   onClick={(e) => {
                     e.preventDefault();
-                    alert("device :" + deviceType);
+                    alert(deviceType);
                   }}
                 >
-                  Click me to know the device
-                </button>
+                  WIDTH is {deviceType}
+                </button> */}
               </TabPanel>
             </Box>
           </form>
