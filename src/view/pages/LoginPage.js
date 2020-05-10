@@ -26,11 +26,19 @@ import { linkStyle } from "../shared/MFComponentWraps";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { useDispatch, useSelector } from "react-redux";
-import { mLoginPost } from "../../state/actions";
-import { log } from "../../state/utils";
+// import { mLoginPost } from "../../state/actions";
+import { log, isBlank } from "../../state/utils";
+import { reduxStates } from "../../state/ducks/shared";
+import { loginRequested, loginResponded } from "../../state/ducks/login";
 
 import { useHistory } from "react-router-dom";
 import { PathFunctionMap as CU, Display } from "../shared/ConstantsUtils";
+
+import { Form, Field, FormSpy } from "react-final-form";
+import { reduxPromiseListener as promiseListener } from "../../index";
+import { FORM_ERROR } from "final-form";
+
+import MakeAsyncFunction from "react-redux-promise-listener";
 
 const useStyles = makeStyles((theme) => ({
   mainCanvas: {
@@ -51,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     padding: ".7vh",
+  },
+  error: {
+    color: "red",
   },
 }));
 
@@ -84,26 +95,15 @@ function LoginPage() {
   let linkClass = linkStyle();
 
   //Find when state has changed
-  const loginState = useSelector((state) => state.loginKey);
+  const loginState = useSelector((state) => state.login);
 
   useEffect(() => {
-    if (loginState.meta.status === "READY") {
+    if (loginState.meta.status === reduxStates.READY) {
+      log("Inside LOGIN USE EFFECT", loginState.meta.status);
       history.push(CU.HOME.path);
     }
   });
-  // const theme = useTheme();
-  // let deviceType = Display.UNKNOWN;
-  /*
-  deviceType = useMediaQuery(theme.breakpoints.down("sm"))
-    ? Display.MOBILE
-    : Display.UNKNOWN;
 
-  deviceType = useMediaQuery(theme.breakpoints.up("lg"))
-    ? Display.DESK
-    : deviceType === Display.UNKNOWN
-    ? Display.TAB
-    : deviceType;
-*/
   log("inside RENDER of login");
 
   const TabPanel = (props) => {
@@ -128,87 +128,209 @@ function LoginPage() {
   // let forgotLink = RRLink({ text: "Forgot password" });
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      {/* {scf} */}
-      <Box className={classes.mainCanvas}>
-        <Paper className={classes.loginPaper}>
-          <form noValidate autoComplete="off">
-            <Box className={classes.loginForm}>
-              {loginState.meta.status === "FETCH_FAILED"
-                ? loginState.meta.message
-                : ""}
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                aria-label="simple tabs example"
-              >
-                <Tab
-                  classes={tabStyleClass}
-                  label="Sign-in"
-                  id="simple_tab-0"
-                />
-                <Tab
-                  classes={tabStyleClass}
-                  label="Register"
-                  id="simple_tab-1"
-                />
-              </Tabs>
+    <MakeAsyncFunction
+      listener={promiseListener}
+      start={loginRequested.type}
+      resolve={loginResponded.type}
+      reject={""}
+      setPayload={(action, payload) => {
+        log("Set Payload called act:", action, " payload:", payload);
+        // setMessageFromServer("Donation detail being sent to server");
+        return {
+          ...action,
+          payload: { userLogin: payload.loginName, password: payload.password },
+        };
+      }}
+      getPayload={(action) => {
+        log("Get Payload new DOC status :", action.payload);
 
-              <TabPanel value={tabValue} index={0}>
-                {/* {loginColumn} */}
-                <FlowLayout column>
-                  {title}
-                  <TextField
-                    size="medium"
-                    label="Userlogin"
-                    variant="outlined"
-                    placeholder="name@domain.com"
-                  />
-                  <TextField
-                    size="medium"
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                  />
-                  <FlowLayout>
-                    <Button
-                      variant="contained"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        dispatch(
-                          mLoginPost({
-                            userLogin: "",
-                            password: "",
-                          })
-                        );
-                      }}
-                    >
-                      Login
-                    </Button>
-                    <Link href="#" onClick={(e) => e.preventDefault()}>
-                      <Typography className={linkClass.root}>
-                        Forgot password
-                      </Typography>
-                    </Link>
-                  </FlowLayout>
-                </FlowLayout>
-              </TabPanel>
-              <TabPanel value={tabValue} index={1}>
-                {/* <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert(deviceType);
-                  }}
-                >
-                  WIDTH is {deviceType}
-                </button> */}
-              </TabPanel>
-            </Box>
-          </form>
-        </Paper>
-      </Box>
-    </React.Fragment>
+        // //setNewDonStatus(action.payload.data.new_donationStatus);
+        // if (action.payload.data.new_donationStatus === "SAVED") {
+        //   // setMessageFromServer("Successfully saved !!!");
+        // } else if (action.payload.data.new_donationStatus === "FAILED") {
+        //   // setMessageFromServer("SAVE of donation failed");
+        // } else {
+        //   // setMessageFromServer("");
+        // }
+        // delete action.payload.data;
+        // log("Get Payload after TRIM action:", action);
+
+        return action.payload;
+      }}
+    >
+      {(asyncFunc) => {
+        return (
+          <Form
+            onSubmit={asyncFunc}
+            initialValues={{ loginName: "", password: "" }}
+            mutators={{}}
+            decorators={[]}
+            validate={(values) => {
+              // log("values :", values);
+              const errors = {};
+              if (isBlank(values.loginName)) {
+                errors.loginName = "Login name is required";
+              }
+
+              if (isBlank(values.password)) {
+                errors.password = "Password is required";
+              } else if (values.password.length < 3) {
+                errors[FORM_ERROR] = "Password length cannot be less than 3 ";
+              }
+
+              return errors;
+            }}
+          >
+            {({
+              submitError,
+              submitErrors,
+              handleSubmit,
+              form,
+              submitting,
+              pristine,
+              values,
+              error,
+              hasSubmitErrors,
+            }) => {
+              return (
+                <form onSubmit={handleSubmit}>
+                  <React.Fragment>
+                    <CssBaseline />
+
+                    {/* {scf} */}
+                    <Box className={classes.mainCanvas}>
+                      <Paper className={classes.loginPaper}>
+                        <Box className={classes.loginForm}>
+                          {loginState.meta.status === "FETCH_FAILED"
+                            ? loginState.meta.message
+                            : ""}
+                          <Tabs
+                            value={tabValue}
+                            onChange={handleTabChange}
+                            aria-label="simple tabs example"
+                          >
+                            <Tab
+                              classes={tabStyleClass}
+                              label="Sign-in"
+                              id="simple_tab-0"
+                            />
+                            <Tab
+                              classes={tabStyleClass}
+                              label="Register"
+                              id="simple_tab-1"
+                            />
+                          </Tabs>
+
+                          <TabPanel value={tabValue} index={0}>
+                            {/* {loginColumn} */}
+                            <FlowLayout column>
+                              {title}
+
+                              <div>
+                                <span className={classes.error}>{error}</span>
+                                <span className={classes.error}>
+                                  {submitError}
+                                </span>
+                              </div>
+
+                              <Field name="loginName">
+                                {({ input, meta }) => (
+                                  <>
+                                    {/* <TextField
+                                      {...input}
+                                      id="donationPurpose"
+                                      placeholder="Temple renovation"
+                                      label="purpose"
+                                      variant="outlined"
+                                      /> */}
+
+                                    <TextField
+                                      {...input}
+                                      size="medium"
+                                      label="Userlogin"
+                                      variant="outlined"
+                                      placeholder="name@domain.com"
+                                    />
+
+                                    {meta.submitError && meta.touched && (
+                                      <span className={classes.error}>
+                                        {meta.submitError}
+                                      </span>
+                                    )}
+                                    {meta.error && meta.touched && (
+                                      <span className={classes.error}>
+                                        {meta.error}
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </Field>
+
+                              <Field name="password">
+                                {({ input, meta }) => (
+                                  <>
+                                    <TextField
+                                      {...input}
+                                      size="medium"
+                                      label="Password"
+                                      type="password"
+                                      variant="outlined"
+                                    />
+                                    {meta.submitError && meta.touched && (
+                                      <span className={classes.error}>
+                                        {meta.submitError}
+                                      </span>
+                                    )}
+                                    {meta.error && meta.touched && (
+                                      <span className={classes.error}>
+                                        {meta.error}
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </Field>
+
+                              <FlowLayout>
+                                <Button
+                                  variant="contained"
+                                  type="submit"
+                                  // onClick={(e) => {
+                                  //   e.preventDefault();
+                                  //   dispatch(
+                                  //     mLoginPost({
+                                  //       userLogin: "",
+                                  //       password: "",
+                                  //     })
+                                  //   );
+                                  // }}
+                                >
+                                  Login
+                                </Button>
+                                <Link
+                                  href="#"
+                                  onClick={(e) => e.preventDefault()}
+                                >
+                                  <Typography className={linkClass.root}>
+                                    Forgot password
+                                  </Typography>
+                                </Link>
+                              </FlowLayout>
+                            </FlowLayout>
+                          </TabPanel>
+                          <TabPanel value={tabValue} index={1}>
+                            <div>Hare krishna</div>
+                          </TabPanel>
+                        </Box>
+                      </Paper>
+                    </Box>
+                  </React.Fragment>
+                </form>
+              );
+            }}
+          </Form>
+        );
+      }}
+    </MakeAsyncFunction>
   );
 }
 

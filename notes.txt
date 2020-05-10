@@ -131,12 +131,12 @@ R_USER_META
 
 --------------------------------------------------------------
 Meta status
- ->NOT_REQUESTED
- ->FETCH_IN_PROGRESS
+ ->INITIAL
+ ->GET_IN_PROGRESS
  ->READY
  ->UPDATE_IN_PROGRESS
  ->UPDATE_FAILED
- ->FETCH_FAILED
+ ->GET_FAILED
 -------------------------------------------------------------------
 Action FORMAT
 ---------------

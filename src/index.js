@@ -11,8 +11,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { Provider } from "react-redux";
 
-import rootReducer from "./state/reducers";
-import rootSaga from "./state/sagas";
+import { rootReducer, rootSaga } from "./state/ducks";
+
 import createReduxPromiseListener from "redux-promise-listener";
 
 let log = console.log;
