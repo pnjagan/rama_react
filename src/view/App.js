@@ -84,7 +84,8 @@ function App(props) {
 
   if (
     (isBlank(localStorage.getItem("siaJWT")) ||
-      isBlank(localStorage.getItem("siaUserLogin"))) && //localStorage has no Valid Value
+      isBlank(localStorage.getItem("siaUserLogin")) ||
+      loginState.meta.status !== reduxStates.READY) && //localStorage has no Valid Value
     location.pathname !== CU.SIGN_IN.path &&
     location.pathname !== CU.REGISTER.path
   ) {
