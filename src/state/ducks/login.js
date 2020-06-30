@@ -9,7 +9,7 @@ import { reduxStates, preparePayload } from "./shared";
 export function* loginUser(action) {
   log("action in SAGA worker:", action);
 
-  const data = yield callAPI("http://localhost:3100/login", "post", {
+  const data = yield callAPI("/login", "post", {
     ...action.payload,
   });
 
@@ -57,6 +57,7 @@ export function* logoutUser(action) {
 }
 
 export function* loginWatcher() {
+  log("Inside Login watcher");
   yield all([
     takeLatest(loginRequested, loginUser),
     takeLatest(logoutRequested, logoutUser),

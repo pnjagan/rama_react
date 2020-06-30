@@ -1,82 +1,77 @@
-
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
 import {
-          CssBaseline
-          ,Typography
-          ,Container
-          ,Paper
-          ,TextField
-          ,Button
-          ,Link
-          ,Box
-          //////////////
-          ,AppBar
-          ,Toolbar
-          ,Hidden
-          ,IconButton
-      } from '@material-ui/core';
+  Typography,
+  Container,
+  Paper,
+  TextField,
+  Button,
+  Link,
+  Box,
+  //////////////
+  AppBar,
+  Toolbar,
+  Hidden,
+  IconButton,
+} from "@material-ui/core";
 
- 
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
 
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
+import Popper from "@material-ui/core/Popper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
 
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';      
+import MenuIcon from "@material-ui/icons/Menu";
 
-import MenuIcon from '@material-ui/icons/Menu';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import PersonIcon from "@material-ui/icons/Person";
+import {
+  shadeBlendConvert,
+  calculateBestTextColor,
+} from "dead-simple-color-utils";
 
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import PersonIcon from '@material-ui/icons/Person';
-import { shadeBlendConvert, calculateBestTextColor } from "dead-simple-color-utils";
+const useStylesMenuItem = makeStyles((theme) => ({
+  // labelMenu : {
+  //   textTransform: 'none',
+  //   margin: '1rem',
+  //   fontSize : '1.2rem'
 
+  // }
+  mi: {
+    borderStyle: "solid",
+    borderWidth: ".05rem",
+    borderRadius: ".4rem",
+    margin: " .2rem .5rem",
+    fontSize: "1.2rem",
+    padding: ".7rem",
+  },
+  ml: {
+    backgroundColor: shadeBlendConvert(theme.palette.primary.main, 60),
+  },
+}));
 
-const useStylesMenuItem = makeStyles(theme => ({
-    // labelMenu : {
-    //   textTransform: 'none',
-    //   margin: '1rem',
-    //   fontSize : '1.2rem'
+const useStylesLinkTypo = makeStyles((theme) => ({
+  root: {
+    fontSize: "1.2rem",
+    padding: "1rem",
+    borderStyle: "solid",
+    borderWidth: ".05rem",
+    borderRadius: ".4rem",
+    margin: " .2rem .5rem",
+    backgroundColor: shadeBlendConvert(theme.palette.primary.main, -5),
 
-    // }    
-    mi : {
-      borderStyle : 'solid',
-      borderWidth : '.05rem',
-      borderRadius : '.4rem',
-      margin : ' .2rem .5rem',
-      fontSize : '1.2rem',
-      padding: '.7rem',
-    },
-    ml : {
-      backgroundColor : shadeBlendConvert(theme.palette.primary.main,60)
-    }    
-  }
-));  
-
-const useStylesLinkTypo = makeStyles(theme => ({
-  root : {
-    fontSize : '1.2rem',
-    padding: '1rem',
-    borderStyle : 'solid',
-    borderWidth : '.05rem',
-    borderRadius : '.4rem',
-    margin : ' .2rem .5rem',
-    backgroundColor : shadeBlendConvert(theme.palette.primary.main,-5),
-
-    '&:hover' : {
-      cursor : 'pointer'
-      ,backgroundColor : shadeBlendConvert(theme.palette.primary.main)
-      ,boxShadow : '.1rem .1rem .3rem .1rem'
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor: shadeBlendConvert(theme.palette.primary.main),
+      boxShadow: ".1rem .1rem .3rem .1rem",
       // ,
-    }
-  },      
-}
-));
-
+    },
+  },
+}));
 
 export default function AppBarMenuList(props) {
   const classesMI = useStylesMenuItem();
@@ -85,10 +80,10 @@ export default function AppBarMenuList(props) {
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
+    setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = event => {
+  const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -97,7 +92,7 @@ export default function AppBarMenuList(props) {
   };
 
   function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
+    if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
     }
@@ -114,54 +109,65 @@ export default function AppBarMenuList(props) {
   }, [open]);
 
   return (
+    <div>
+      <Link
+        ref={anchorRef}
+        onClick={handleToggle}
+        aria-haspopup="true"
+        aria-controls={open ? "menu-list-grow" : undefined}
+        color="inherit"
+        // className={classes.labelMenu}
+        TypographyClasses={typoClasses}
+        underline="none"
+      >
+        {((mn) => {
+          if (mn !== "LoggedInUser") {
+            return mn;
+          } else {
+            return <PersonIcon />;
+          }
+        })(props.menuName)}
+      </Link>
 
-
-      <div>
-
-        <Link 
-          ref={anchorRef}
-          onClick={handleToggle}
-          aria-haspopup="true"
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          color="inherit"
-          // className={classes.labelMenu}
-          TypographyClasses={typoClasses}
-          underline = "none"
-        >
-              {
-              (
-                mn => {
-                  if(mn !== 'LoggedInUser') {
-                    return mn;
-                  } else {
-                    return <PersonIcon />;
-                  }
-              }
-            )(props.menuName)
-            }
-
-        </Link>
-
-
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                          <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} className={classesMI.ml}>
-                            { props.menuItems.map( (item , i)=> 
-                              <MenuItem onClick={item.itemHandler} key={i} className={classesMI.mi}> {item.itemName} </MenuItem>)  
-                            }
-                          </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-
+      <Popper
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
+            }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={open}
+                  id="menu-list-grow"
+                  onKeyDown={handleListKeyDown}
+                  className={classesMI.ml}
+                >
+                  {props.menuItems.map((item, i) => (
+                    <MenuItem
+                      onClick={item.itemHandler}
+                      key={i}
+                      className={classesMI.mi}
+                    >
+                      {" "}
+                      {item.itemName}{" "}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </div>
   );
 }

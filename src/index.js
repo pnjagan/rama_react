@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { rootReducer, rootSaga } from "./state/ducks";
 
 import createReduxPromiseListener from "redux-promise-listener";
+import { CssBaseline } from "@material-ui/core";
 
 let log = console.log;
 
@@ -45,6 +46,7 @@ function WrappedApp(props) {
   return (
     <Provider store={store}>
       <Router>
+        <CssBaseline />
         <App />
       </Router>
     </Provider>

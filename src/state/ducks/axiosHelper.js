@@ -6,7 +6,7 @@ headers["Content-Type"] = "application/json";
 headers["Accept"] = "application/json";
 
 let config = {
-  timeout: 10000,
+  timeout: 10000000,
   headers,
 };
 
@@ -20,10 +20,13 @@ OUTPUT of call API is uniform irrespective of failure or success
 }
 
 */
+
+const baseURL = "http://localhost:3100";
 export const callAPI = (endPoint, method, data) => {
   log("Input data in call API :", data);
+  headers["x-access-token"] = localStorage.getItem("siaJWT");
 
-  return axios[method](endPoint, data, config).then(
+  return axios[method](`${baseURL}${endPoint}`, data, config).then(
     (response) => {
       log("Success API: ", response);
       return {

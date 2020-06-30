@@ -1,10 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { log } from "../../state/utils";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
-  CssBaseline,
   Typography,
   Container,
   Paper,
@@ -36,6 +35,7 @@ import Grid from "@material-ui/core/Grid";
 import { PathFunctionMap as CU } from "../shared/ConstantsUtils";
 
 import { logoutRequested } from "../../state/ducks/login";
+import { log } from "../../state/utils";
 
 const useStyles = makeStyles((theme) => ({
   title: {},
@@ -50,13 +50,6 @@ const useStyles = makeStyles((theme) => ({
     // marginBottom : theme.spacing(2),
   },
 
-  userCard: {
-    padding: ".3rem",
-    borderRadius: ".3rem",
-    margin: `0px 0px ${theme.spacing(1)}px 0px`,
-    display: "flex",
-    justifyContent: "flex-end",
-  },
   submenuLink: {
     display: "block",
     margin: theme.spacing(1),
@@ -81,17 +74,9 @@ const useStyles = makeStyles((theme) => ({
     padding: ".7rem",
     borderRadius: ".3rem",
   },
-  userMenuItem: {
-    borderStyle: "solid",
-    borderWidth: ".05rem",
-    borderRadius: ".4rem",
-    margin: " .2rem .5rem",
-    fontSize: "1.2rem",
-    padding: ".7rem",
-  },
 }));
 
-function ContentIndex(props) {
+export function Dashboard(props) {
   const classes = useStyles();
   let history = useHistory();
 
@@ -127,68 +112,12 @@ function ContentIndex(props) {
 
   //NO PARAMETERS to dispatch logout to middleware
   const logoutHandler = (e) => {
-    log("logoutRequested ", logoutRequested());
+    log("logoutRequested :", logoutRequested());
     dispatch(logoutRequested());
   };
 
   return (
     <Box className={classes.mainCanvas}>
-      <Grid item xs={12} elevation={2}>
-        <Paper className={classes.userCard}>
-          <Link
-            style={{ padding: ".7rem", cursor: "pointer" }}
-            ref={anchorRef}
-            onClick={handleUserClick}
-            aria-haspopup="true"
-            aria-controls={userMenuOpen ? "menu-list-grow" : undefined}
-            color="inherit"
-            style={{ fontSize: "1.1rem" }}
-          >
-            {loginUser.data.userName}
-          </Link>
-        </Paper>
-      </Grid>
-
-      {/* User drop down */}
-      <Popper
-        open={userMenuOpen}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom",
-            }}
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={handleUserMenuClose}>
-                <MenuList
-                  autoFocusItem={userMenuOpen}
-                  id="menu-list-grow"
-                  onKeyDown={handleListKeyDown}
-                >
-                  <MenuItem className={classes.userMenuItem}>
-                    Preferences{" "}
-                  </MenuItem>
-                  <MenuItem
-                    onClick={logoutHandler}
-                    className={classes.userMenuItem}
-                  >
-                    logout{" "}
-                  </MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-      {/* User drop down */}
-
       <Grid container spacing={3} style={{}}>
         {/* -----------------------------INVOICE ------------------------------------- */}
         <Grid item xs={12} sm={6} md={3} lg={2}>
@@ -198,6 +127,7 @@ function ContentIndex(props) {
             onClick={(e) => {
               e.preventDefault();
               log("Clicked Items");
+              goTo(e, CU.INVOICE.path);
             }}
           >
             <Typography
@@ -218,6 +148,7 @@ function ContentIndex(props) {
             onClick={(e) => {
               e.preventDefault();
               log("Clicked Items");
+              goTo(e, CU.ITEM.path);
             }}
           >
             <Typography
@@ -238,6 +169,7 @@ function ContentIndex(props) {
             onClick={(e) => {
               e.preventDefault();
               log("Clicked Items");
+              goTo(e, CU.CUSTOMER.path);
             }}
           >
             <Typography
@@ -266,6 +198,7 @@ function ContentIndex(props) {
               onClick={(e) => {
                 e.preventDefault();
                 log("CLicked Params");
+                goTo(e, CU.CONFIG_PARAM.path);
               }}
               className={classes.submenuLink}
             >
@@ -276,6 +209,7 @@ function ContentIndex(props) {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
+                goTo(e, CU.CONFIG_USER.path);
               }}
               className={classes.submenuLink}
             >
@@ -286,26 +220,18 @@ function ContentIndex(props) {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
+                goTo(e, CU.CONFIG_TAX.path);
               }}
               className={classes.submenuLink}
             >
               <Typography align="center">Tax management</Typography>
             </Link>
-
-            <Link
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-              className={classes.submenuLink}
-            >
-              <Typography align="center">Shipping methods</Typography>
-            </Link>
           </Paper>
         </Grid>
+        {/* -----------------------------Configurations END-------------------- */}
       </Grid>
     </Box>
   );
 }
 
-export default ContentIndex;
+// export default ContentIndex;

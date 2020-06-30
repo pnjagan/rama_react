@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 // import { useTheme } from "@material-ui/core/styles";
 
 import {
-  CssBaseline,
   Typography,
   Container,
   Paper,
@@ -22,6 +21,7 @@ import {
 } from "../shared/LayoutHelper";
 
 import { linkStyle } from "../shared/MFComponentWraps";
+import { FFShowError } from "../shared/FFShowError";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -59,9 +59,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     padding: ".7vh",
-  },
-  error: {
-    color: "red",
   },
 }));
 
@@ -195,8 +192,6 @@ function LoginPage() {
               return (
                 <form onSubmit={handleSubmit}>
                   <React.Fragment>
-                    <CssBaseline />
-
                     {/* {scf} */}
                     <Box className={classes.mainCanvas}>
                       <Paper className={classes.loginPaper}>
@@ -226,24 +221,13 @@ function LoginPage() {
                             <FlowLayout column>
                               {title}
 
-                              <div>
-                                <span className={classes.error}>{error}</span>
-                                <span className={classes.error}>
-                                  {submitError}
-                                </span>
-                              </div>
-
+                              <FFShowError
+                                error={error}
+                                submitError={submitError}
+                              />
                               <Field name="loginName">
                                 {({ input, meta }) => (
                                   <>
-                                    {/* <TextField
-                                      {...input}
-                                      id="donationPurpose"
-                                      placeholder="Temple renovation"
-                                      label="purpose"
-                                      variant="outlined"
-                                      /> */}
-
                                     <TextField
                                       {...input}
                                       size="medium"
@@ -251,17 +235,7 @@ function LoginPage() {
                                       variant="outlined"
                                       placeholder="name@domain.com"
                                     />
-
-                                    {meta.submitError && meta.touched && (
-                                      <span className={classes.error}>
-                                        {meta.submitError}
-                                      </span>
-                                    )}
-                                    {meta.error && meta.touched && (
-                                      <span className={classes.error}>
-                                        {meta.error}
-                                      </span>
-                                    )}
+                                    <FFShowError meta={meta} />
                                   </>
                                 )}
                               </Field>
@@ -276,34 +250,13 @@ function LoginPage() {
                                       type="password"
                                       variant="outlined"
                                     />
-                                    {meta.submitError && meta.touched && (
-                                      <span className={classes.error}>
-                                        {meta.submitError}
-                                      </span>
-                                    )}
-                                    {meta.error && meta.touched && (
-                                      <span className={classes.error}>
-                                        {meta.error}
-                                      </span>
-                                    )}
+                                    <FFShowError meta={meta} />
                                   </>
                                 )}
                               </Field>
 
                               <FlowLayout>
-                                <Button
-                                  variant="contained"
-                                  type="submit"
-                                  // onClick={(e) => {
-                                  //   e.preventDefault();
-                                  //   dispatch(
-                                  //     mLoginPost({
-                                  //       userLogin: "",
-                                  //       password: "",
-                                  //     })
-                                  //   );
-                                  // }}
-                                >
+                                <Button variant="contained" type="submit">
                                   Login
                                 </Button>
                                 <Link
@@ -334,4 +287,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export { LoginPage };

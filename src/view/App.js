@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  CssBaseline,
   Typography,
   Container,
   Paper,
@@ -12,7 +11,7 @@ import {
   Button,
   Box,
 } from "@material-ui/core";
-import LoginPage from "./pages/LoginPage";
+// import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import WIP from "./pages/WIP";
 import { PathFunctionMap as CU } from "./shared/ConstantsUtils";
@@ -32,17 +31,13 @@ import { reduxStates } from "../state/ducks/shared";
 // match.params.function will contain the function..
 
 /*
-All modules are redircted to the main page for now
+SIGN_IN is redirected from Apps
 */
-const pathsToMain = Object.entries(CU)
-  .reduce((newList, currEntry) => {
-    // console.log('newList');
-    // console.log(newList );
-    return currEntry[1].func !== "" && !newList.includes(currEntry[1].module)
-      ? newList.concat(currEntry[1].module)
-      : [...newList];
-  }, [])
-  .map((val) => `/${val}/:function*`);
+const pathsToMain = Object.entries(CU).reduce((newList, currEntry) => {
+  return currEntry[0] !== "SIGN_IN" && !newList.includes(currEntry[1].path)
+    ? newList.concat(currEntry[1].path)
+    : [...newList];
+}, []);
 
 function App(props) {
   log("PROPS in APPS :", props);
@@ -72,6 +67,7 @@ function App(props) {
   log("token :", localStorage.getItem("siaJWT"));
 
   log("CUrrent Path :", location.pathname);
+  log(" Login STatus", loginState.meta.status);
 
   log(
     "INvaid LOGIN check",
@@ -79,15 +75,14 @@ function App(props) {
     isBlank(localStorage.getItem("siaUserLogin")),
     //Exclusion pages
     location.pathname !== CU.SIGN_IN.path,
-    location.pathname !== CU.REGISTER.path
+    loginState.meta.status !== reduxStates.READY
   );
 
   if (
     (isBlank(localStorage.getItem("siaJWT")) ||
       isBlank(localStorage.getItem("siaUserLogin")) ||
       loginState.meta.status !== reduxStates.READY) && //localStorage has no Valid Value
-    location.pathname !== CU.SIGN_IN.path &&
-    location.pathname !== CU.REGISTER.path
+    location.pathname !== CU.SIGN_IN.path
   ) {
     log("Invalid SIGN IN DETAILS, push to Sign in page");
     return <Redirect to={CU.SIGN_IN.path} />;
@@ -95,23 +90,14 @@ function App(props) {
   }
 
   //If Path is SignIN or Registration, no need to check LOGIN STATUS
-  if (
-    location.pathname === CU.SIGN_IN.path ||
-    location.pathname === CU.REGISTER.path
-  ) {
-    return (
-      <Switch>
-        <Route path={CU.SIGN_IN.path} component={LoginPage} exact />
-        <Route path={CU.REGISTER.path} component={LoginPage} exact />
-      </Switch>
-    );
+  if (location.pathname === CU.SIGN_IN.path) {
+    // return <Route component={CU.SIGN_IN.component} exact />;
+    return <CU.SIGN_IN.component />;
   }
 
   if (loginState.meta.status === reduxStates.READY) {
     return (
       <Switch>
-        <Route path={CU.HOME.path} component={MainPage} exact />
-
         <Route path={pathsToMain} component={MainPage} exact />
         <Route component={WIP} />
       </Switch>
