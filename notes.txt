@@ -3,8 +3,6 @@ use create-create-app for the setup.
 
 yarn add typeface-roboto 
 yarn add  @material-ui/core
-
-
 yarn add @material-ui/icons
 
 ======================================
@@ -62,7 +60,7 @@ Password is added to Global git creds
 ---
 jagannathan@jagannathan-Inspiron-3593:~$ more .git-credentials 
 https://pnjagan%40gmail.com:Rama%24123@github.com
--------------------------------------------
+------------------------------------------------------------------------------
 
 https://hackernoon.com/redux-saga-tutorial-for-beginners-and-dog-lovers-aa69a17db645
 
@@ -131,12 +129,12 @@ R_USER_META
 
 --------------------------------------------------------------
 Meta status
- ->INITIAL
- ->GET_IN_PROGRESS
- ->READY
- ->UPDATE_IN_PROGRESS
- ->UPDATE_FAILED
- ->GET_FAILED
+  INITIAL: "INITIAL",
+  GET_IN_PROGRESS: "GET_IN_PROGRESS",
+  READY: "READY",
+  UPDATE_IN_PROGRESS: "UPDATE_IN_PROGRESS",
+  UPDATE_FAILED: "UPDATE_FAILED",
+  GET_FAILED: "GET_FAILED",
 -------------------------------------------------------------------
 Action FORMAT
 ---------------
@@ -176,3 +174,26 @@ STORE structure:
 }
 ----------------------------------------------------
 https://kentcdodds.com/blog/dont-call-a-react-function-component
+
+yarn add typescript @types/node @types/react @types/react-dom @types/jest
+
+-------------------------------------------------------------------------------------
+Have earmarked 2 courses in Udemy. Plenty of courses of Youtube and we also have free access to Linda thru Saranya account.
+Typescript: The Complete Developer's Guide [2020]
+----ANother option, we can buy then the price falls to less than 200 rs (165 rs offer)
+
+--====================================================================================================
+Handling TABLES of Data in responsive WEB-APPS
+1)DO Nothing
+2)Horizontal scrolling
+3)Transform Column into rows and group them together.
+4)Hide additional columns in the table, allowing user to switch the columns on-off
+5)redesign the UI with Cards *Complex options*
+
+Option 2 comes in material-table
+
+With invoicing APP targetted as an APP, dont wory about resolution smaller that 1024 and horizontal scrolling is OK.
+----------------------
+Other enhancements can be thought of after we have a generix solution for tables.
+
+

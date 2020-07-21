@@ -1,3 +1,5 @@
+import { log } from "../utils";
+
 export const reduxStates = {
   INITIAL: "INITIAL",
   GET_IN_PROGRESS: "GET_IN_PROGRESS",
@@ -8,16 +10,18 @@ export const reduxStates = {
 };
 
 export function preparePayload(params) {
+  log("Prepayload :", params);
+
   if (params != null) {
-    let { aError, aMeta } = params;
-    delete params.aError;
-    delete params.aMeta;
-    aError = aError == null ? false : aError;
+    let { error, meta } = params;
+    delete params.error;
+    delete params.meta;
+    error = error == null ? false : error;
 
     return {
       payload: { ...params },
-      error: aError,
-      meta: aMeta,
+      error: error,
+      meta: meta,
     };
   } else {
     return {

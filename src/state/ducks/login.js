@@ -3,7 +3,6 @@ import { put, takeLatest, all, select } from "redux-saga/effects";
 import { createReducer, createAction } from "@reduxjs/toolkit";
 import { log } from "../utils";
 
-import { FORM_ERROR } from "final-form";
 import { reduxStates, preparePayload } from "./shared";
 
 export function* loginUser(action) {
@@ -17,33 +16,33 @@ export function* loginUser(action) {
 
   if (data.status === 200) {
     log("Full data :", data);
-    localStorage.setItem("siaJWT", data.serverResponse.jwtToken);
-    localStorage.setItem("siaUserLogin", data.serverResponse.userLogin);
+    localStorage.setItem("siaJWT", data.serverResponse.data.jwtToken);
+    localStorage.setItem("siaUserLogin", data.serverResponse.data.userLogin);
     //UserName not be stored in localStorage
 
     log("JWT set", localStorage.getItem("siaJWT"));
 
     yield put(
       loginResponded({
-        userLogin: data.serverResponse.userLogin,
-        userName: data.serverResponse.userName,
-        aError: false,
+        userLogin: data.serverResponse.data.userLogin,
+        userName: data.serverResponse.data.userName,
+        error: false,
       })
     );
   } else {
     if (data.status === "NETWORK_ERROR") {
       yield put(
         loginResponded({
-          aError: true,
-          [FORM_ERROR]: "Unexpected network error.please try again",
+          error: true,
+          requestError: "Unexpected network error.please try again",
         })
       );
     } else {
       //Get server error and send to FORM ERROR
       yield put(
         loginResponded({
-          aError: true,
-          [FORM_ERROR]: data.serverResponse.message,
+          error: true,
+          requestError: data.serverResponse.requestError,
         })
       );
     }

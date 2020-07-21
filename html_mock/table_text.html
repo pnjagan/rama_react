@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Table Text</title>
+    <style>
+      .column1 {
+        width: 10%;
+        background-color: aqua;
+      }
+
+      .column2 {
+        width: 10%;
+      }
+
+      .column3 {
+        width: 85%;
+      }
+
+      table {
+        table-layout: auto;
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+      }
+
+      .short-column {
+        background: yellow;
+        width: 15%;
+      }
+      .long-column {
+        background: lime;
+        width: 70%;
+      }
+
+      .lite-gray {
+        background: #f2f2f2;
+      }
+      .gray {
+        background: #cccccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table border="1" style="width: 100%; table-layout: auto;">
+      <thead>
+        <tr>
+          <th class="column1">COLUMN1</th>
+          <th class="column2">COLUMN1</th>
+          <th class="column3">COLUMN1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="column1">1</td>
+          <td class="column2">macha avatar</td>
+          <td class="column3">macha devaya namaH</td>
+        </tr>
+
+        <tr>
+          <td class="column1">2</td>
+          <td class="column2">naranaya</td>
+          <td class="column3">naranaya namah</td>
+        </tr>
+
+        <tr>
+          <td class="column1">3</td>
+          <td class="column2">krishna</td>
+          <td class="column3">krishnaya namah</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>.</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="short-column">Short Column</th>
+          <!-- th sets the width -->
+          <th class="short-column">Short Column</th>
+          <!-- th sets the width -->
+          <th class="long-column">Long Column</th>
+          <!-- th sets the width -->
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class="lite-gray">Short Column</td>
+          <!-- td inherits th width -->
+          <td class="lite-gray">Short Column</td>
+          <!-- td inherits th width -->
+          <td class="gray">Long Column</td>
+          <!-- td inherits th width -->
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

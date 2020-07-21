@@ -39,6 +39,7 @@ import { reduxPromiseListener as promiseListener } from "../../index";
 import { FORM_ERROR } from "final-form";
 
 import MakeAsyncFunction from "react-redux-promise-listener";
+import produce from "immer";
 
 const useStyles = makeStyles((theme) => ({
   mainCanvas: {
@@ -132,7 +133,7 @@ function LoginPage() {
       reject={""}
       setPayload={(action, payload) => {
         log("Set Payload called act:", action, " payload:", payload);
-        // setMessageFromServer("Donation detail being sent to server");
+
         return {
           ...action,
           payload: { userLogin: payload.loginName, password: payload.password },
@@ -141,18 +142,11 @@ function LoginPage() {
       getPayload={(action) => {
         log("Get Payload new DOC status :", action.payload);
 
-        // //setNewDonStatus(action.payload.data.new_donationStatus);
-        // if (action.payload.data.new_donationStatus === "SAVED") {
-        //   // setMessageFromServer("Successfully saved !!!");
-        // } else if (action.payload.data.new_donationStatus === "FAILED") {
-        //   // setMessageFromServer("SAVE of donation failed");
-        // } else {
-        //   // setMessageFromServer("");
-        // }
-        // delete action.payload.data;
-        // log("Get Payload after TRIM action:", action);
-
-        return action.payload;
+        const error = action.payload.requestError;
+        return produce(action.payload, (draft) => {
+          delete draft.requestError;
+          draft[FORM_ERROR] = error;
+        });
       }}
     >
       {(asyncFunc) => {

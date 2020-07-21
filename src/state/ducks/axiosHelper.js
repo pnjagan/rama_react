@@ -38,6 +38,10 @@ export const callAPI = (endPoint, method, data) => {
     (error) => {
       log("Error API :", error);
 
+      // log("status :", error.response.status);
+      // log("statusText :", error.response.statusText);
+      // log("data :", error.response.data);
+
       if (error.response != null) {
         return {
           status: error.response.status,
@@ -45,6 +49,7 @@ export const callAPI = (endPoint, method, data) => {
           serverResponse: error.response.data,
         };
       } else {
+        //No response receive means error is on our side or the network
         return {
           status: "NETWORK_ERROR",
           statusText: "Network Error",

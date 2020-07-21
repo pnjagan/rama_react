@@ -39,8 +39,9 @@ const pathsToMain = Object.entries(CU).reduce((newList, currEntry) => {
     : [...newList];
 }, []);
 
-function App(props) {
-  log("PROPS in APPS :", props);
+//props
+function App() {
+  // log("PROPS in APPS :", props);
   const history = useHistory();
   const location = useLocation();
 
@@ -49,7 +50,7 @@ function App(props) {
   let dispatch = useDispatch();
 
   useEffect(() => {
-    log("inside use EFFECT");
+    log("inside use effect");
     if (
       isBlank(loginState.data.userLogin) &&
       !isBlank(localStorage.getItem("siaUserLogin"))
@@ -103,10 +104,10 @@ function App(props) {
       </Switch>
     );
   } else if (loginState.meta.status === reduxStates.GET_IN_PROGRESS) {
-    return "Please wait, login in-progress";
+    return <div>Please wait, login in-progress</div>;
   } else {
     log("INSIDE UNEXPECTED PROBLEM", loginState);
-    return "Unexpected condition, wait to resolve or contact admin!";
+    return <div>Unexpected condition, wait to resolve or contact admin!</div>;
   }
 }
 

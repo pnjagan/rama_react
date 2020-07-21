@@ -24,13 +24,21 @@ let log = console.log;
 // const DisplayContext = React.createContext("display");
 export const reduxPromiseListener = createReduxPromiseListener();
 
-function WrappedApp(props) {
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+function WrappedApp() {
   // create the saga middleware
   const sagaMiddleware = createSagaMiddleware();
 
   const middlewares = [sagaMiddleware, reduxPromiseListener.middleware];
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+  // const composeEnhancers = compose;
 
   log("Root reducer");
   log(rootReducer, sagaMiddleware);

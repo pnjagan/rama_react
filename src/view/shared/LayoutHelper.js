@@ -109,25 +109,21 @@ function DoubleColumnOfFieldLabel(components) {
     if (rowElement.length === 4) {
       formStruc.push(
         <div key={i + 1} className={classes.wrl}>
-          {" "}
           {rowElement[0]}
         </div>
       );
       formStruc.push(
         <div key={i + 2} className={classes.wrr}>
-          {" "}
           {rowElement[1]}
         </div>
       );
       formStruc.push(
         <div key={i + 3} className={classes.wrl}>
-          {" "}
           {rowElement[2]}
         </div>
       );
       formStruc.push(
         <div key={i + 4} className={classes.wrr}>
-          {" "}
           {rowElement[3]}
         </div>
       );
@@ -136,7 +132,6 @@ function DoubleColumnOfFieldLabel(components) {
       //to handle stretch
       formStruc.push(
         <div key={i + 1} className={classes.wrl}>
-          {" "}
           {rowElement[0]}
         </div>
       );

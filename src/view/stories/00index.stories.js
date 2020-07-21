@@ -1,20 +1,29 @@
-import React from 'react';
-import { Button } from '@storybook/react/demo';
-import {BuildRRTextField,BuildRRDateField,BuildRRSelectField,BuildRRCheckbox,BuildButton,TBC} from '../shared/LegacyInputfieldCreators';
+import React from "react";
+import { Button } from "@storybook/react/demo";
+import {
+  BuildRRTextField,
+  BuildRRDateField,
+  BuildRRSelectField,
+  BuildRRCheckbox,
+  BuildButton,
+  TBC,
+} from "../shared/LegacyInputfieldCreators";
 
-import Box from '@material-ui/core/Box';
-import { createMuiTheme ,ThemeProvider} from '@material-ui/core/styles';
+import Box from "@material-ui/core/Box";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import {SingleColumnOfFieldLabel,DoubleColumnOfFieldLabel}  from '../shared/LayoutHelper';
+import {
+  SingleColumnOfFieldLabel,
+  DoubleColumnOfFieldLabel,
+} from "../shared/LayoutHelper";
 
+import { log } from "../../state/utils";
 
-
-export default { title: 'INDEX' };
+export default { title: "00 - INDEX" };
 
 export const withText = () => <Button>Hello Button</Button>;
 
 export const withTextDemo = () => <Button>Hello Button Demo</Button>;
-
 
 export const withEmoji = () => (
   <Button>
@@ -26,29 +35,30 @@ export const withEmoji = () => (
 
 /*
 export const rrInputs = () => {
-return (
-  <>
-<RRTextfield size='small' id='tf1' placeholder='eg. 04(...) or 02(...)' label='Phone'></RRTextfield> 
-<br></br>
-<RRTextfield size='medium' id='tf2' ></RRTextfield> 
-<br></br>
+  return (
+    <>
+  <RRTextfield size='small' id='tf1' placeholder='eg. 04(...) or 02(...)' label='Phone'></RRTextfield> 
+  <br></br>
+  <RRTextfield size='medium' id='tf2' ></RRTextfield> 
+  <br></br>
 
 
-<br></br>
-<TextField
-    id="invoice-num" 
-    placeholder = "A123"
+  <br></br>
+  <TextField
+      id="invoice-num" 
+      placeholder = "A123"
 
-    variant="outlined" 
-    size='medium'
-/>
+      variant="outlined" 
+      size='medium'
+  />
 
-</>
-)
+  </>
+  )
 
 } ;
 */
 
+/*
 export const SingleRowOfFL = () => {
   let row1 = BuildRRTextField ({
     size : 'small',
@@ -178,3 +188,4 @@ export const DoubleRowOfFL = () => {
 
   return DC;
 }
+*/

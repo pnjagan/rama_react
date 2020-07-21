@@ -1,12 +1,43 @@
 import { callAPI } from "../ducks/axiosHelper";
 import { put, takeLatest, all, select } from "redux-saga/effects";
 import { createReducer, createAction } from "@reduxjs/toolkit";
-import { log } from "../utils";
+import { log, isBlank } from "../utils";
 
-import { FORM_ERROR } from "final-form";
 import { reduxStates, preparePayload } from "./shared";
 
 export function* customerGet(action) {
+  log("Inside customer GET Requested", action);
+
+  let data = null;
+  yield put(
+    customerGetResponded({
+      error: false,
+      data: {
+        customerList: [
+          {
+            id: 1,
+            name: "Hare Krishna 1",
+            number: "HK01",
+            email: "krishna1@chennai.com",
+            address_line1: "NO 1, madhavan st, govindapuram",
+            // address_line2: "Ram  Ram 1",
+            // address_line3: "Krishna  Krishna 1",
+          },
+          {
+            id: 2,
+            name: "Hare Krishna 2",
+            number: "HK02",
+            email: "krishna2@chennai.com",
+            address_line1: "NO 2, madhavan st, govindapuram",
+            // address_line2: "Ram  Ram 2",
+            // address_line3: "Krishna  Krishna 2",
+          },
+        ],
+        currentIndex: 0,
+      },
+    })
+  );
+
   /*
   TO FILL
   */
@@ -28,42 +59,48 @@ export function* customerSave(action) {
     });
   }
 
+  log("DATA customer Save - :", data);
+
   if (data.status === 200) {
     //There could a validation error with status = 200
 
-    if (data.serverResponse.ERROR_MESSAGE != null) {
+    if (
+      !isBlank(data.serverResponse.requestError) ||
+      !isBlank(data.serverResponse.detailError)
+    ) {
       log("Error message from server");
+
       yield put(
         customerSaveResponded({
-          aError: true,
-          [FORM_ERROR]: data.serverResponse.ERROR_MESSAGE,
-        })
-      );
-    } else if (data.serverResponse.FIELD_ERRORS) {
-      yield put(
-        customerSaveResponded({
-          aError: true,
-          ...data.serverResponse.FIELD_ERRORS,
+          error: true,
+          requestError: data.serverResponse.requestError,
+          detailError: data.serverResponse.detailError,
         })
       );
     } else {
       yield put(
         customerSaveResponded({
-          aError: false,
-          sdata: {
+          error: false,
+          data: {
             customerId: data.serverResponse.result,
           },
         })
       );
     }
   } else {
-    customerSaveResponded({
-      aError: true,
-      [FORM_ERROR]: data.serverResponse.message,
-    });
+    //status other than 200 from server
+    //log("error message :", data.serverResponse.requestError);
+
+    //For response other than 200, we do not expect a field level error
+    yield put(
+      customerSaveResponded({
+        error: true,
+        requestError: data.serverResponse.requestError,
+      })
+    );
   }
 
-  log("Response in customer save Saga worker:", data);
+  // log("Response in customer save Saga worker:", data);
 }
 
 export function* customerWatcher() {

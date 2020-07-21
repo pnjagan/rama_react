@@ -9,13 +9,11 @@ const PathFunctionMap = Object.create(null);
 
 PathFunctionMap.HOME = {
   path: "/",
-
   component: Dashboard,
 };
 
 PathFunctionMap.SIGN_IN = {
   path: "/signin",
-
   component: LoginPage,
 };
 
