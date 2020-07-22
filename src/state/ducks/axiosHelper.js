@@ -24,9 +24,17 @@ OUTPUT of call API is uniform irrespective of failure or success
 const baseURL = "http://localhost:3100";
 export const callAPI = (endPoint, method, data) => {
   log("Input data in call API :", data);
+  log("method :", method);
   headers["x-access-token"] = localStorage.getItem("siaJWT");
 
-  return axios[method](`${baseURL}${endPoint}`, data, config).then(
+  log("config :", config);
+  let data2 = { ...data, token: localStorage.getItem("siaJWT") };
+
+  return axios[method](
+    `${baseURL}${endPoint}?token=${localStorage.getItem("siaJWT")}`,
+    data2,
+    config
+  ).then(
     (response) => {
       log("Success API: ", response);
       return {

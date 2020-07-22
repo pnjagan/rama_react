@@ -8,35 +8,29 @@ import { reduxStates, preparePayload } from "./shared";
 export function* customerGet(action) {
   log("Inside customer GET Requested", action);
 
-  let data = null;
-  yield put(
-    customerGetResponded({
-      error: false,
-      data: {
-        customerList: [
-          {
-            id: 1,
-            name: "Hare Krishna 1",
-            number: "HK01",
-            email: "krishna1@chennai.com",
-            address_line1: "NO 1, madhavan st, govindapuram",
-            // address_line2: "Ram  Ram 1",
-            // address_line3: "Krishna  Krishna 1",
-          },
-          {
-            id: 2,
-            name: "Hare Krishna 2",
-            number: "HK02",
-            email: "krishna2@chennai.com",
-            address_line1: "NO 2, madhavan st, govindapuram",
-            // address_line2: "Ram  Ram 2",
-            // address_line3: "Krishna  Krishna 2",
-          },
-        ],
-        currentIndex: 0,
-      },
-    })
-  );
+  let data = yield callAPI("/customers", "get", {
+    ...action.payload,
+  });
+
+  if (data.status === 200) {
+    yield put(
+      customerGetResponded({
+        error: false,
+        data: {
+          customerList: data.serverResponse.data,
+          currentIndex: 0,
+        },
+      })
+    );
+  } else {
+    yield put(
+      customerGetResponded({
+        error: true,
+        requestError: data.serverResponse.requestError,
+        detailError: data.serverResponse.detailError,
+      })
+    );
+  }
 
   /*
   TO FILL

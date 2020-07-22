@@ -118,7 +118,7 @@ export function CustomerSearch() {
       */
       {
         title: "Name",
-        field: "name",
+        field: "customerName",
         width: "20%",
         headerStyle: {
           // width: "25%",
@@ -127,7 +127,7 @@ export function CustomerSearch() {
       },
       {
         title: "Number",
-        field: "number",
+        field: "customerNum",
         width: "10%",
         headerStyle: {
           // width: "15%",
@@ -145,7 +145,7 @@ export function CustomerSearch() {
       },
       {
         title: "Address Line1",
-        field: "address_line1",
+        field: "addressLine1",
         width: "55%",
         headerStyle: {
           // width: "40%",
@@ -155,7 +155,7 @@ export function CustomerSearch() {
       // { title: "Address Line2", field: "address_line2" },
       // { title: "Address Line3", field: "address_line3" },
     ],
-    data: [
+    data: [] /*[
       {
         id: 1,
         name: "Hare Krishna 1",
@@ -211,6 +211,7 @@ export function CustomerSearch() {
         // address_line3: "Krishna  Krishna 4",
       },
     ],
+    */,
   });
 
   // const [dataFromServer, setDataFromServer] = useState();
