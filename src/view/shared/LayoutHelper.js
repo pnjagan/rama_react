@@ -3,6 +3,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+const R = require("ramda");
 
 const useStyles = makeStyles({
   gc2: {
@@ -162,6 +163,8 @@ function SingleColumnOfMFF(components) {
 }
 
 export function FlowLayout(props) {
+  const flatChildren = R.flatten(props.children);
+
   return (
     <Grid
       container
@@ -169,10 +172,9 @@ export function FlowLayout(props) {
       spacing={2}
       alignItems="center"
     >
-      {props.children.map((c, i) => {
+      {flatChildren.map((c, i) => {
         return (
           <Grid item key={"grid-" + i}>
-            {" "}
             {c}
           </Grid>
         );
@@ -186,7 +188,7 @@ export function FlowLayout(props) {
 https://gs.statcounter.com/screen-resolution-stats/desktop/india
 SO it safe to keep then as part of TAB
 
-ideally we need only 2 layouts. but depending on screen size we need to decide when to breal columns, is it for TAB or mobiles
+ideally we need only 2 layouts. but depending on screen size we need to decide when to break columns, is it for TAB or mobiles
 --------------------------------------------
 
 // 0 very small- mobile = 0 to 959

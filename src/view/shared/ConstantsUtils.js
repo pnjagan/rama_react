@@ -2,6 +2,7 @@ import { LoginPage } from "../pages/LoginPage";
 import { Dashboard } from "../components/Dashboard";
 import { PlaceHolder } from "../components/PlaceHolder";
 import { Customer } from "../components/Customer";
+import { Invoice } from "../components/Invoice";
 
 import React from "react";
 
@@ -27,10 +28,7 @@ PathFunctionMap.USER_PREFERENCE = {
 
 PathFunctionMap.INVOICE = {
   path: "/invoice",
-
-  component: () => {
-    return <PlaceHolder componentName="Invoice" />;
-  },
+  component: Invoice,
 };
 
 PathFunctionMap.CUSTOMER = {

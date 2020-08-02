@@ -35,9 +35,11 @@ function CustomFormWr(props) {
   return <>{children}</>;
 }
 
-export function CustomerCrUpd() {
+export function CustomerCrUpd(props) {
   const [dataFromServer, setDataFromServer] = useState();
   // const [searchCriteriaArray, setSearchCriteriaArray] = useState([]);
+
+  log("CrUpd props :", props);
 
   return (
     <MakeAsyncFunction
@@ -88,7 +90,7 @@ export function CustomerCrUpd() {
         return (
           <Form
             onSubmit={asyncSubmitFn}
-            initialValues={{}}
+            initialValues={{ ...props.vuEntityObj }}
             mutators={{}}
             decorators={[]}
             validate={(values) => {

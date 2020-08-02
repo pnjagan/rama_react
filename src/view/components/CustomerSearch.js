@@ -91,7 +91,7 @@ const searchStyles = makeStyles((theme) => {
   };
 });
 
-export function CustomerSearch() {
+export function CustomerSearch(props) {
   const searchStyleClass = searchStyles();
 
   const [state, setState] = React.useState({
@@ -220,7 +220,7 @@ export function CustomerSearch() {
     log("Data in Data From Server:", data);
     setState((prevState) => {
       const dataForTable = produce(prevState, (draft) => {
-        draft.data = data.customerList;
+        draft.data = data.list;
       });
 
       log("dataForTable :", dataForTable);
@@ -477,46 +477,54 @@ export function CustomerSearch() {
           {
             icon: PageviewIcon,
             tooltip: "Detail view",
-            onClick: (event, rowData) => alert("Detail view " + rowData.name),
+            onClick: (event, rowData) => {
+              // alert("Detail view " + rowData.name);
+
+              props.navigateToDetail(
+                produce(rowData, (draft) => {
+                  delete draft.tableData;
+                })
+              );
+            },
           },
         ]}
-        // editable={{
-        //   onRowAdd: (newData) =>
-        //     new Promise((resolve) => {
-        //       setTimeout(() => {
-        //         resolve();
-        //         setState((prevState) => {
-        //           const data = [...prevState.data];
-        //           data.push(newData);
-        //           return { ...prevState, data };
-        //         });
-        //       }, 600);
-        //     }),
-        //   onRowUpdate: (newData, oldData) =>
-        //     new Promise((resolve) => {
-        //       setTimeout(() => {
-        //         resolve();
-        //         if (oldData) {
-        //           setState((prevState) => {
-        //             const data = [...prevState.data];
-        //             data[data.indexOf(oldData)] = newData;
-        //             return { ...prevState, data };
-        //           });
-        //         }
-        //       }, 600);
-        //     }),
-        //   onRowDelete: (oldData) =>
-        //     new Promise((resolve) => {
-        //       setTimeout(() => {
-        //         resolve();
-        //         setState((prevState) => {
-        //           const data = [...prevState.data];
-        //           data.splice(data.indexOf(oldData), 1);
-        //           return { ...prevState, data };
-        //         });
-        //       }, 600);
-        //     }),
-        // }}
+        editable={{
+          // onRowAdd: (newData) =>
+          //   new Promise((resolve) => {
+          //     setTimeout(() => {
+          //       resolve();
+          //       setState((prevState) => {
+          //         const data = [...prevState.data];
+          //         data.push(newData);
+          //         return { ...prevState, data };
+          //       });
+          //     }, 600);
+          //   }),
+          // onRowUpdate: (newData, oldData) =>
+          //   new Promise((resolve) => {
+          //     setTimeout(() => {
+          //       resolve();
+          //       if (oldData) {
+          //         setState((prevState) => {
+          //           const data = [...prevState.data];
+          //           data[data.indexOf(oldData)] = newData;
+          //           return { ...prevState, data };
+          //         });
+          //       }
+          //     }, 600);
+          //   }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve) => {
+              setTimeout(() => {
+                resolve();
+                setState((prevState) => {
+                  const data = [...prevState.data];
+                  data.splice(data.indexOf(oldData), 1);
+                  return { ...prevState, data };
+                });
+              }, 600);
+            }),
+        }}
       />
     </Paper>
   );

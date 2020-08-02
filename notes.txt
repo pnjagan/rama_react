@@ -197,3 +197,12 @@ With invoicing APP targetted as an APP, dont wory about resolution smaller that 
 Other enhancements can be thought of after we have a generix solution for tables.
 
 
+UI Design Principles
+---------------------------
+https://webapphuddle.com/rapid-web-app-design-course/
+http://designingwebinterfaces.com/designing-web-interfaces-12-screen-patterns
+
+https://webapphuddle.com/master-detail-ui-pattern-design/ - mainly 2 ways , side by side and stacked MOdel.
+
+
+

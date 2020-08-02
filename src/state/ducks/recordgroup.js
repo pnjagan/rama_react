@@ -1,20 +1,19 @@
-import { callAPI } from "../ducks/axiosHelper";
+import { callAPI } from "./axiosHelper";
 import { put, takeLatest, all, select } from "redux-saga/effects";
 import { createReducer, createAction } from "@reduxjs/toolkit";
 import { log, isBlank } from "../utils";
-
 import { reduxStates, preparePayload } from "./shared";
 
-export function* customerGet(action) {
-  log("Inside customer GET Requested", action);
+export function* invoiceGet(action) {
+  log("Inside invoice GET Requested", action);
 
-  let data = yield callAPI("/customers", "get", {
+  let data = yield callAPI("/invoices", "get", {
     ...action.payload,
   });
 
   if (data.status === 200) {
     yield put(
-      customerGetResponded({
+      invoiceGetResponded({
         error: false,
         data: {
           list: data.serverResponse.data,
@@ -24,38 +23,32 @@ export function* customerGet(action) {
     );
   } else {
     yield put(
-      customerGetResponded({
+      invoiceGetResponded({
         error: true,
         requestError: data.serverResponse.requestError,
         detailError: data.serverResponse.detailError,
       })
     );
   }
-
-  /*
-  TO FILL
-  */
-  // log("Inside customer GET Requested", action);
 }
 
-export function* customerSave(action) {
-  log("action in customer Save Saga worker:", action);
+export function* invoiceSave(action) {
+  log("action in invoice Save Saga worker:", action);
   let data = null;
 
   if (action.payload.id == null) {
-    //customer
-    log("customer POST request");
-    data = yield callAPI("/customers", "post", {
+    log("invoice POST request");
+    data = yield callAPI("/invoices", "post", {
       ...action.payload,
     });
   } else {
-    log("customer PUT request");
-    data = yield callAPI(`/customers/${action.payload.id}`, "put", {
+    log("invoice PUT request");
+    data = yield callAPI(`/invoices/${action.payload.id}`, "put", {
       ...action.payload,
     });
   }
 
-  log("DATA customer Save - :", data);
+  log("DATA Invoice Save - :", data);
 
   if (data.status === 200) {
     //There could a validation error with status = 200
@@ -67,7 +60,7 @@ export function* customerSave(action) {
       log("Error message from server");
 
       yield put(
-        customerSaveResponded({
+        invoiceSaveResponded({
           error: true,
           requestError: data.serverResponse.requestError,
           detailError: data.serverResponse.detailError,
@@ -75,7 +68,7 @@ export function* customerSave(action) {
       );
     } else {
       yield put(
-        customerSaveResponded({
+        invoiceSaveResponded({
           error: false,
           data: {
             id: data.serverResponse.data.id,
@@ -89,55 +82,43 @@ export function* customerSave(action) {
 
     //For response other than 200, we do not expect a field level error
     yield put(
-      customerSaveResponded({
+      invoiceSaveResponded({
         error: true,
         requestError: data.serverResponse.requestError,
       })
     );
   }
-
-  // log("Response in customer save Saga worker:", data);
 }
 
-export function* customerWatcher() {
-  log("Inside customer saga");
-  yield all([takeLatest(customerGetRequested, customerGet)]);
-  yield all([takeLatest(customerSaveRequested, customerSave)]);
+export function* invoiceWatcher() {
+  log("Inside invoice saga");
+  yield all([takeLatest(invoiceGetRequested, invoiceGet)]);
+  yield all([takeLatest(invoiceSaveRequested, invoiceSave)]);
 }
 
 //---------------------------
-export const customerGetRequested = createAction(
-  "customer/get/requested",
+export const recordGroupGetRequested = createAction(
+  "recordgroup/get/requested",
   preparePayload
 );
 
-export const customerGetResponded = createAction(
-  "customer/get/responded",
+export const recordGroupGetResponded = createAction(
+  "recordgroup/get/responded",
   preparePayload
 );
 
-export const customerSaveRequested = createAction(
-  "customer/save/requested",
-  preparePayload
-);
-
-export const customerSaveResponded = createAction(
-  "customer/save/responded",
-  preparePayload
-);
-
-export const customerReducer = createReducer(
+export const recordgroupReducer = createReducer(
   {
     meta: { status: reduxStates.INITIAL, message: "" },
     data: { list: [], currentIndex: -1 },
   },
   {
-    [customerGetRequested]: (state, action) => {
+    [invoiceGetRequested]: (state, action) => {
       state.meta.status = reduxStates.GET_IN_PROGRESS;
       state.data.list = [];
       state.data.currentIndex = -1;
     },
-    [customerGetResponded]: (state, action) => {
+    [invoiceGetResponded]: (state, action) => {
       if (action.error) {
         state.meta.status = reduxStates.GET_FAILED;
       } else {
@@ -147,7 +128,7 @@ export const customerReducer = createReducer(
     },
     /* No Action in reducer for saveRequested or saveResponded. 
     //There does not seem to be any advantage to keep that in store */
-    // [customerSaveResponded]: (state, action) => {
+    // [invoiceSaveResponded]: (state, action) => {
     //   if (action.error) {
     //     state.meta.status = reduxStates.UPDATE_FAILED;
     //   } else {

@@ -28,7 +28,12 @@ export const callAPI = (endPoint, method, data) => {
   headers["x-access-token"] = localStorage.getItem("siaJWT");
 
   log("config :", config);
-  let data2 = { ...data, token: localStorage.getItem("siaJWT") };
+  let data2 = null;
+  if (method === "GET") {
+    data2 = { ...data, token: localStorage.getItem("siaJWT") };
+  } else {
+    data2 = { ...data };
+  }
 
   return axios[method](
     `${baseURL}${endPoint}?token=${localStorage.getItem("siaJWT")}`,
